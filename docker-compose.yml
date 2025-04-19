@@ -1,0 +1,28 @@
+services:
+  web:
+    image: nginx
+    ports:
+      - 82:80
+    volumes:
+    - /home/ksu/Projects/online-shop/Docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    - /home/ksu/Projects/online-shop:/var/www/html
+
+  php-fpm:
+    container_name: php-fpm
+    build: ./Docker/php
+    volumes:
+      - /home/ksu/Projects/online-shop:/var/www/html
+
+  postgres:
+   image: postgres:13.1
+   container_name: postgres_db
+   volumes:
+     - /home/ksu/Projects/online-shop/Docker/postgres/data:/var/lib/postgresql/data
+   environment:
+     - POSTGRES_DB=${POSTGRES_DB}
+     - POSTGRES_USER=${POSTGRES_USER}
+     - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+   ports:
+     - 5437:5432
+
+
