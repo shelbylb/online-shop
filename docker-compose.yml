@@ -12,6 +12,7 @@ services:
     build: ./Docker/php
     volumes:
       - /home/ksu/Projects/online-shop:/var/www/html
+      - /home/ksu/Projects/online-shop/Docker/php/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-xdebug.ini
 
   postgres:
    image: postgres:13.1
