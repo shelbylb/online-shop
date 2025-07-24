@@ -2,27 +2,30 @@
 
 namespace Controllers;
 
-use Model\Cart;
+use Model\UserProducts;
 use Model\Order;
 use Model\OrderProduct;
 use Model\Product;
 
 
-class OrderController
+class OrderController extends BaseController
 {
 
     private Order $orderModel;
-    private Cart $cartModel;
+    private UserProducts $userProduct;
     private OrderProduct $orderProductModel;
-
     private Product $productModel;
 
 
+
     public function __construct(){
+        parent:: __construct();
         $this->orderModel = new Order();
-        $this->cartModel = new Cart();
+        $this->userProduct = new UserProducts();
         $this->orderProductModel = new OrderProduct();
         $this->productModel = new Product();
+        $this->orderService = new OrderService();
+
     }
 
     public function getCheckOut()
@@ -39,11 +42,8 @@ class OrderController
 
     public function handleCheckOut()
     {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
 
-        if (!isset($_SESSION['userId'])) {
+        if ($this->authService->check()) {
             header("Location: /login");
             exit();
         }
@@ -57,11 +57,11 @@ class OrderController
             $contactPhone = $_POST["contact_phone"];
             $comment = $_POST["comment"];
             $address = $_POST["address"];
-            $userId = $_SESSION['userId'];
+            $user = $this->authService->getCurrentUser();
 
-            $orderId = $this->orderModel->create($contactName, $contactPhone, $comment, $address, $userId);
+            $orderId = $this->orderModel->create($contactName, $contactPhone, $comment, $address, $user->getId());
 
-            $userProducts = $this->cartModel->getAllUserProductsByUserId($userId);
+            $userProducts = $this->userProduct->getAllUserProductsByUserId($user->getId());
 
 
             foreach ($userProducts as $userProduct) {
@@ -72,7 +72,7 @@ class OrderController
             }
 
             //удаляет товары из корзины
-            $this->cartModel->deleteByUserId($userId);
+            $this->userProduct->deleteByUserId($user->getId());
 
 
         } else {
@@ -117,16 +117,12 @@ class OrderController
 
     public function getAllOrders()
     {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-
-        if (!isset($_SESSION['userId'])) {
+        if ($this->authService->check()) {
             header("Location: /login");
             exit();
         }
 
-        $userId = $_SESSION['userId'];
+        $userId = $this->authService->check();
 
         $userOrders = $this->orderModel->getAllByUserId($userId);
 

@@ -4,29 +4,31 @@ namespace Controllers;
 
 use Model\User;
 
-class UserController
+
+class UserController extends BaseController
 {
 
     private User $userModel;
 
-    public function __construct(){
+    public function __construct()
+    {
+        parent:: __construct();
         $this->userModel = new User();
     }
 
     public function getRegistrate()
     {
-
-        session_start();
-        if (isset($_SESSION['userId'])) {
+        if ($this->authService->check()) {
             header('Location: /catalog');
         }
 
         require_once '../Views/registration_form.php';
     }
+
     public function registrate()
     {
 
-        $error = $this -> validateRegistrate($_POST);
+        $error = $this->validateRegistrate($_POST);
 
         if (empty($error)) {
 
@@ -36,7 +38,11 @@ class UserController
 
             $password = password_hash($password, PASSWORD_DEFAULT);
 
-            $this ->userModel ->addUser($name, $email, $password);
+            $this->userModel->addUser($name, $email, $password);
+
+            //if(!$this->authService->check()){
+            //$_SESSION['userId'] = $this->userModel->getId();
+            //header('Location: /catalog');}
 
 
             header('Location: /login');
@@ -102,44 +108,31 @@ class UserController
     }
 
 
-
     public function getLogin()
     {
         session_start();
-        if (isset($_SESSION['userId'])) {
+        if ($this->authService->check()) {
             header('Location: /catalog');
         }
 
         require_once '../Views/login_form.php';
     }
+
     public function login()
     {
-        $errors = $this -> validateLogin($_POST);
+        $errors = $this->validateLogin($_POST);
 
 
-        if (empty($errors))
-        {
-            $username = $_POST["username"];
-            $password = $_POST["password"];
+        if (empty($errors)) {
+            $a = $_POST['email'];
+            $result = $this->authService->auth($a, $_POST['password']);
 
-            $user = $this->userModel->getByEmail($username);
+            if ($result) {
 
-
-            $errors = [];
-            if ($user === null) {
-                $errors['username'] = "Неверный логин или пароль";
+                header('Location: /catalog');
+                exit();
             } else {
-                $passwordDB = $user->getPassword();
-
-
-                if (password_verify($password, $passwordDB)) {
-                    session_start();
-                    $_SESSION['userId'] = $user->getId();
-
-                    header('Location: /catalog');
-                } else {
-                    $errors['username'] = "Неверный логин или пароль";
-                }
+                $errors['autorization'] = "Неверный логин или пароль";
             }
         }
 
@@ -150,11 +143,11 @@ class UserController
     private function validateLogin(array $data): array
     {
         $errors = [];
-        if (!isset($data['username'])){
+        if (!isset($data['username'])) {
             $errors['username'] = 'Поле должно  быть заполнено';
         }
 
-        if (!isset($data['password'])){
+        if (!isset($data['password'])) {
             $errors['password'] = 'Поле должно  быть заполнено';
         }
 
@@ -164,67 +157,57 @@ class UserController
 
     public function getProfile()
     {
-        session_start();
-        if (!isset($_SESSION['userId'])) {
-            header('Location: /login');
+        if ($this->authService->check()) {
+            $user = $this->authService->getCurrentUser();
+            require_once '../Views/profile.php';
         } else {
 
-            require_once '../Views/profile.php';
+            header('Location: /login');
         }
     }
 
 
     public function getEditProfile()
     {
-        session_start();
-        if (!isset($_SESSION['userId'])) {
-            header('Location: /login_form.php');
-        } else {
-
+        if ($this->authService->check()) {
             require_once '../Views/edit-profile.php';
+        } else {
+            header('Location: /login_form.php');
         }
     }
 
     public function editProfile()
     {
-        if(session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
+        if ($this->authService->check()) {
+            $user = $this->authService->getCurrentUser();
 
-        if(!isset($_SESSION['userId'])){
+            $error = $this->validateEditProfile($_POST);
+
+            if (empty($error)) {
+                $name = $_POST["name"];
+                $email = $_POST["email"];
+                $userId = $user->getId();
+
+
+                if ($name !== $user->getName()) {
+
+                    $this->userModel->updateName($name);
+                }
+
+                if (!empty($email) && $email !== $user->getEmail()) {
+                    $this->userModel->updateEmail($email);
+
+                }
+
+                header('Location: /profile');
+                exit;
+            }
+
+            require_once '../Views/edit-profile.php';
+        } else{
             header("Location: /login_form.php");
             exit();
         }
-
-        $error = $this -> validateEditProfile($_POST);
-
-        if(empty($error))
-        {
-            $name = $_POST["name"];
-            $email = $_POST["email"];
-            $userId = $_SESSION['userId'];
-
-
-            $user = $this->userModel->getById($userId);
-
-            if($name !== $user->getName())
-            {
-
-                $this->userModel->updateName($name);
-            }
-
-            if(!empty($email) && $email !== $user->getEmail())
-            {
-                $this->userModel->updateEmail($email);
-
-            }
-
-            header('Location: /profile');
-            exit;
-        }
-
-
-        require_once '../Views/edit-profile.php';
     }
 
 
@@ -232,33 +215,27 @@ class UserController
     {
         $error = [];
 
-        if (isset($data['name']))
-        {
+        if (isset($data['name'])) {
 
             $name = $data["name"];
-            if (!empty($email) && strlen($name) < 2)
-            {
+            if (!empty($email) && strlen($name) < 2) {
                 $error['name'] = 'Имя должно быть больше двух символов';
             }
         }
 
 
-        if (isset($data['email']))
-        {
+        if (isset($data['email'])) {
             $email = $data["email"];
-            if (!empty($email) && strlen($email) < 2)
-            {
+            if (!empty($email) && strlen($email) < 2) {
                 $error['email'] = 'Email должно быть больше двух символов';
-            } elseif (!empty($email) && filter_var($email, FILTER_VALIDATE_EMAIL) === false)
-            {
+            } elseif (!empty($email) && filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
                 $error['email'] = 'Email некорректный';
-            } else
-            {
+            } else {
                 $user = $this->userModel->getByEmail($email);
 
                 $userId = $_SESSION['userId'];
 
-                if($user !== null) {
+                if ($user !== null) {
                     if ($user->getId() !== $userId) {
                         $error['email'] = 'Email уже зарегистрирован';
                     }
@@ -272,17 +249,11 @@ class UserController
 
     public function logout()
     {
-        session_start();
-
-        session_destroy();
-
-
+        $this->authService->logout();
         header("Location: /catalog");
-
+        exit();
 
     }
-
-
 
 
 }

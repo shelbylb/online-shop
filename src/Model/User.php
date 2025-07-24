@@ -9,9 +9,13 @@ class User extends Model
     private string $email;
     private string $password;
 
+    protected function getTableName(): string{
+        return 'users';
+    }
+
     public function addUser(string $name, string $email, string $password)
     {
-        $stmt = $this->PDO->prepare("INSERT INTO users (name, email, password) VALUES (:name, :email, :password)");
+        $stmt = $this->PDO->prepare("INSERT INTO {$this->getTableName()} (name, email, password) VALUES (:name, :email, :password)");
         $stmt->execute(['name' => $name, 'email' => $email, 'password' => $password]);
 
 
@@ -19,7 +23,7 @@ class User extends Model
 
     public function getByEmail(string $email): self|null
     {
-        $stmt = $this->PDO->prepare("SELECT * FROM users WHERE email= :email");
+        $stmt = $this->PDO->prepare("SELECT * FROM {$this->getTableName()} WHERE email= :email");
         $stmt->execute(['email' => $email]);
 
         $user = $stmt->fetch();
@@ -38,7 +42,7 @@ class User extends Model
 
     public function getById(string  $userId): self|null
     {
-        $stmt = $this->PDO->query('SELECT * FROM users WHERE id = ' . $userId);
+        $stmt = $this->PDO->query("SELECT * FROM {$this->getTableName()} WHERE id = " . $userId);
 
         $user = $stmt->fetch();
         if ($user === false) {
@@ -56,14 +60,14 @@ class User extends Model
 
     public function updateName( string $name)
     {
-        $smt = $pdo->prepare('UPDATE users SET name = :name WHERE id = ' . $_SESSION['userId']);
+        $smt = $pdo->prepare("UPDATE {$this->getTableName()} SET name = :name WHERE id = " . $_SESSION['userId']);
         $smt->execute(['name' => $name]);
 
     }
 
     public function updateEmail(string $email)
     {
-        $smt = $pdo->prepare('UPDATE users SET email = :email WHERE id = ' . $_SESSION['userId']);
+        $smt = $pdo->prepare("UPDATE {$this->getTableName()} SET email = :email WHERE id = " . $_SESSION['userId']);
         $smt->execute(['email' => $email]);
     }
 

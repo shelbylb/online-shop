@@ -9,6 +9,7 @@ use Core\App;
 require_once './../Core/Autoloader.php';
 
 $path = dirname(__DIR__); //возвращает родительскую директорию
+//$path = realpath(__DIR__ . '/../');
 
 \Core\Autoloader::registar($path);
 

@@ -2,28 +2,22 @@
 
 namespace Controllers;
 
-class BaseController
+use Model\User;
+use Service\AuthService;
+use Service\OrderService;
+
+abstract class BaseController
 {
+    protected AuthService $authService;
+    protected OrderService $orderService;
+
+
     public function __construct()
     {
-
-    }
-
-    public function check():bool
-    {
-        $this->startSession();
-        return isset($_SESSION['userId']);
-
+        $this->authService = new AuthService();
+        $this->orderService = new OrderService();
     }
 
 
-
-    protected function startSession()
-    {
-        if(session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
-
-    }
 
 }

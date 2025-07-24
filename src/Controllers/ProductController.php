@@ -4,11 +4,12 @@ namespace Controllers;
 
 use Model\Product;
 
-class ProductController
+class ProductController extends BaseController
 {
     private Product $productModel;
 
     public function __construct(){
+        parent:: __construct();
         $this->productModel = new Product();
     }
 

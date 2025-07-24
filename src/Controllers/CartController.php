@@ -1,59 +1,73 @@
 <?php
 
 namespace Controllers;
-use Model\Cart;
 
-class CartController
+use Model\UserProducts;
+use Service\AuthService;
+use Service\CartService;
+
+class CartController extends BaseController
 {
-    private Cart $cartModel;
+    private UserProducts $cartModel;
+    private CartService $cartService;
 
-    public function __construct(){
-        $this-> cartModel = new Cart();
+    public function __construct()
+    {
+        parent:: __construct();
+        $this->cartModel = new UserProducts();
+        $this->cartService = new CartService();
     }
 
     public function addCart()
     {
-        if(session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
+        if ($this->authService->check()) {
 
-        if(!isset($_SESSION['userId'])){
-            header("Location: /login_form.php");
-            exit();
-        }
+            $errors = $this->validateAddCart($_POST);
+            $user = $this->authService->getCurrentUser();
+            $data = $_POST;
 
-        $errors = $this -> validateAddCart($_POST);
+            if (empty($errors)) {
 
-        if(empty($errors)){
+                $this->cartService->addProduct($data['productId'], $data['userId'], $data ['amount']);
 
-            $userId = $_SESSION['userId'];
-            $productId = $_POST['productId'];
-            $amount = $_POST['amount'];
-
-
-            $data = $this->cartModel->checkProduct($productId, $userId);
-
-            if($data === null) {
-
-                $this->cartModel->add($userId, $productId, $amount);
-
-            } else {
-                $amount = $data->getAmount() + $amount;
-                $this->cartModel->update($userId, $productId, $amount);
             }
 
             header("Location: /catalog");
+        } else {
+            header("Location: /login");
+            exit();
         }
     }
 
-    private function validateAddCart(array  $data): array
+    public function deleteCart()
+    {
+        if ($this->authService->check()) {
+
+            $errors = $this->validateAddCart($_POST);
+            $user = $this->authService->getCurrentUser();
+            $data = $_POST;
+
+            if (empty($errors)) {
+
+                $this->cartService->decreaseProduct($data['productId'], $data['userId'], $data ['amount']);
+
+            }
+
+            header("Location: /catalog");
+        } else {
+            header("Location: /login");
+            exit();
+        }
+    }
+
+    private function validateAddCart(array $data): array
     {
         $errors = [];
 
-        if(isset($data['amount'])){
+        if (isset($data['amount'])) {
             $amount = (int)$data['amount'];
 
-            if($amount < 0 && $amount > 100){
+            if ($amount < 0 && $amount > 100) {
                 $errors['amount'] = 'Введите колличество товара от 1 до 100';
             }
         }
@@ -61,39 +75,30 @@ class CartController
         return $errors;
     }
 
-    public function getCart(){
+    public function getCart()
+    {
 
-        if(session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
+        if ($this->authService->check()) {
 
-        if(!isset($_SESSION['userId'])){
+
+            $user = $this->authService->getCurrentUser();
+
+
+            $userProducts = $this->cartModel->getAllUserProductsByUserId($user->getId());
+
+            $productsCart = [];
+            foreach ($userProducts as $userProduct) {
+                $productId = $this->cartModel->getProductId();
+                $product = $this->cartModel->getByAmount($productId);
+                $product['amount'] = $this->cartModel->getAmount();
+                $productsCart[] = $product;
+            }
+            require_once '../Views/cart.php';
+        } else {
             header("Location: /login");
             exit();
         }
 
-
-
-        $userId = $_SESSION['userId'];
-
-        /** @var Cart[] $userProducts */
-        $userProducts = $this ->cartModel ->getAllUserProductsByUserId($userId);
-
-        $productsCart = [];
-        foreach($userProducts as $userProduct)
-        {
-            //$productId = $userProduct->getProductId();
-            $product = $this ->cartModel ->getByAmount($userProduct);
-            $product['amount'] = $userProduct->getAmount(); //нужен сеттер
-            $productsCart[] = $product;
-
-
-
-        }
-
-
-
-        require_once '../Views/cart.php';
     }
 
 }

@@ -12,9 +12,13 @@ class Product extends Model
     private int $price;
     private string $imageUrl;
 
+    protected function getTableName(): string{
+        return 'products';
+    }
+
     public function catalog() : array|null
     {
-        $stmt = $this->PDO->query('SELECT * FROM products');
+        $stmt = $this->PDO->query("SELECT * FROM {$this->getTableName()}");
         $products = $stmt->fetchAll();
 
         if ($products === []) {
@@ -27,7 +31,7 @@ class Product extends Model
             $orderObj = new self();
             $orderObj->id = $catalog['id'];
             $orderObj->name = $catalog['name'];
-            $orderObj->description = $catalog['description'];
+            $orderObj->description = $catalog['discription'];
             $orderObj->price = $catalog['price'];
             $orderObj->imageUrl = $catalog['image_url'];
             $array[] = $orderObj;
@@ -40,7 +44,7 @@ class Product extends Model
 
     public function getOneById(int $productId) : self|null
     {
-        $stmt = $this->PDO->query("SELECT * FROM products WHERE id = $productId");
+        $stmt = $this->PDO->query("SELECT * FROM {$this->getTableName()} WHERE id = $productId");
         $product = $stmt->fetch();
 
         if ($product === false) {
