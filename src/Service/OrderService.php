@@ -20,22 +20,24 @@ class OrderService
 
     }
 
-    public function createOrder()
+    public function createOrder(string $contactName, string $contactPhone, string $comment, string $address, int $userId)
     {
 
 
-            $userProducts = $this->userProducts->getAllUserProductsByUserId($userModel->getId());
+        $orderId = $this->orderModel->create($contactName, $contactPhone, $comment, $address, $userId);
+
+        $userProducts = $this->userProducts->getAllUserProductsByUserId($userId);
 
 
             foreach ($userProducts as $userProduct) {
-                $productId = $userProduct->getProductId();
+                $productId = $userProduct->getProductId();  // нет перехода
                 $amount = $userProduct->getAmount();
 
                 $this->orderProductModel->create($orderId, $productId, $amount);
             }
 
             //удаляет товары из корзины
-            $this->userProducts->deleteByUserId($user->getId());
+            $this->userProducts->deleteByUserId($userId);
 
     }
 }

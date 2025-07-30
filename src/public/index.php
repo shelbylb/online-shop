@@ -23,6 +23,7 @@ $app->get('/edit-profile', UserController::class, 'getEditProfile');
 $app->post('/edit-profile', UserController::class, 'editProfile');
 $app->get('/catalog', ProductController::class, 'getCatalog');
 $app->post('/add-cart', CartController::class, 'addCart');
+$app->post('/decrease-cart', CartController::class, 'decreaseCart');
 $app->get('/cart', CartController::class, 'getCart');
 $app->get('/logout', UserController::class, 'logout');
 $app->get('/create-order', OrderController::class, 'getCheckOut');

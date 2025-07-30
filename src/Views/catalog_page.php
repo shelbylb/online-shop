@@ -25,9 +25,21 @@
                     <input type="hidden" placeholder="Введите артикул" name="productId" value="<?php echo $product->getId()?>" id="productId" required>
 
 
-                    <input type="text" placeholder="Введите количество" name="amount" id="amount" required>
+                    <input type="text" placeholder="1" name="amount" id="amount" required>
 
-                    <button type="submit" class="registerbtn">Добавить в корзину</button>
+                    <button type="submit" class="registerbtn">+</button>
+                </div>
+
+            </form>
+            <form action="/decrease-cart" method="POST">
+                <div class="container">
+
+                    <input type="hidden" placeholder="Введите артикул" name="productId" value="<?php echo $product->getId()?>" id="productId" required>
+
+
+                    <input type="text" placeholder="1" name="amount" id="amount" required>
+
+                    <button type="submit" class="registerbtn">-</button>
                 </div>
 
             </form>

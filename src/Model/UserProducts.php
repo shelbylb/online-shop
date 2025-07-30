@@ -18,13 +18,13 @@ class UserProducts extends Model
     }
 
 
-    public function getAllUserProductsByUserId(int $userId): array|null
+    public function getAllUserProductsByUserId(int $userId): array
     {
         $stmt = $this->PDO->query("SELECT * FROM {$this->getTableName()} WHERE user_id = " . $userId);
         $userProducts = $stmt->fetchAll();
 
         if ($userProducts === []){
-            return null;
+            return [];
         }
 
         $array = [];
@@ -44,9 +44,9 @@ class UserProducts extends Model
 
     }
 
-    public function getByAmount(int $userProduct): self|null
+    public function getById(int $userProduct): self|null
     {
-        $stmt = $this->PDO->query('SELECT * FROM products WHERE id = '. $userProduct['product_id']);
+        $stmt = $this->PDO->query('SELECT * FROM products WHERE id = '. $userProduct);
 
         $product = $stmt->fetch();
 
@@ -57,7 +57,7 @@ class UserProducts extends Model
         $obj = new self();
         $obj->id = $product['id'];
         $obj->name = $product['name'];
-        $obj->description = $product['description'];
+        $obj->description = $product['discription'];
         $obj->price = $product['price'];
         $obj->imageUrl = $product['image_url'];
 

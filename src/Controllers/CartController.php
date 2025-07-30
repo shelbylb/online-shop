@@ -39,7 +39,7 @@ class CartController extends BaseController
         }
     }
 
-    public function deleteCart()
+    public function decreaseCart()
     {
         if ($this->authService->check()) {
 
@@ -87,11 +87,13 @@ class CartController extends BaseController
             $userProducts = $this->cartModel->getAllUserProductsByUserId($user->getId());
 
             $productsCart = [];
+
             foreach ($userProducts as $userProduct) {
-                $productId = $this->cartModel->getProductId();
-                $product = $this->cartModel->getByAmount($productId);
-                $product['amount'] = $this->cartModel->getAmount();
+                $productId = $userProduct->getProductId();
+                $product = $userProduct->getById($productId);
+                $product->setAmount($userProduct->getAmount());
                 $productsCart[] = $product;
+
             }
             require_once '../Views/cart.php';
         } else {

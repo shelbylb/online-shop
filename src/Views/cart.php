@@ -8,12 +8,12 @@
             <div class="card text-center">
                 <a href="#">
 
-                    <img class="card-img-top" src="<?php echo $product['image_url']?>" alt="Card image">
+                    <img class="card-img-top" src="<?php echo $product->getImageUrl()?>" alt="Card image">
                     <div class="card-body">
-                        <p class="card-text text-muted"><?php echo $product['name'];?></p>
-                        <a href="#"><h5 class="card-title"><?php echo $product['description'];?></h5></a>
+                        <p class="card-text text-muted"><?php echo $product->getName();?></p>
+                        <a href="#"><h5 class="card-title"><?php echo $product->getDescription();?></h5></a>
                         <div class="card-footer">
-                            <?php echo $product['price'];?>
+                            <?php echo $product->getPrice();?>
                         </div>
                     </div>
                 </a>
@@ -21,11 +21,24 @@
             <form action="/add-cart" method="POST">
                 <div class="container">
 
-                    <input type="hidden" placeholder="Введите артикул" name="productId" value="<?php echo $product['id']; ?>" id="productId" required>
+                    <input type="hidden" placeholder="Введите артикул" name="productId" value="<?php echo $product->getId()?>" id="productId" required>
 
-                    <input type="text" placeholder="<?php echo $product['amount'];?>" name="amount" id="amount" required>
 
-                    <button type="submit" class="registerbtn">Добавить в корзину</button>
+                    <input type="text" placeholder="1" name="amount" id="amount" required>
+
+                    <button type="submit" class="registerbtn">+</button>
+                </div>
+
+            </form>
+            <form action="/decrease-cart" method="POST">
+                <div class="container">
+
+                    <input type="hidden" placeholder="Введите артикул" name="productId" value="<?php echo $product->getId()?>" id="productId" required>
+
+
+                    <input type="text" placeholder="1" name="amount" id="amount" required>
+
+                    <button type="submit" class="registerbtn">-</button>
                 </div>
 
             </form>

@@ -24,7 +24,7 @@ class OrderController extends BaseController
         $this->userProduct = new UserProducts();
         $this->orderProductModel = new OrderProduct();
         $this->productModel = new Product();
-        $this->orderService = new OrderService();
+
 
     }
 
@@ -53,26 +53,14 @@ class OrderController extends BaseController
 
         if (empty($errors)) {
 
-            $contactName = $_POST["contact_name"];
-            $contactPhone = $_POST["contact_phone"];
-            $comment = $_POST["comment"];
-            $address = $_POST["address"];
             $user = $this->authService->getCurrentUser();
 
-            $orderId = $this->orderModel->create($contactName, $contactPhone, $comment, $address, $user->getId());
-
-            $userProducts = $this->userProduct->getAllUserProductsByUserId($user->getId());
-
-
-            foreach ($userProducts as $userProduct) {
-                $productId = $userProduct->getProductId();
-                $amount = $userProduct->getAmount();
-
-                $this->orderProductModel->create($orderId, $productId, $amount);
-            }
-
-            //удаляет товары из корзины
-            $this->userProduct->deleteByUserId($user->getId());
+            $this->orderService->createOrder(
+                $_POST["contact_name"],
+                $_POST["contact_phone"],
+                $_POST["comment"],
+                $_POST["address"],
+                $user->getId());
 
 
         } else {

@@ -124,8 +124,9 @@ class UserController extends BaseController
 
 
         if (empty($errors)) {
-            $a = $_POST['email'];
-            $result = $this->authService->auth($a, $_POST['password']);
+
+
+            $result = $this->authService->auth($_POST['username'], $_POST['password']);
 
             if ($result) {
 
