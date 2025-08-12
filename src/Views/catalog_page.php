@@ -11,7 +11,7 @@
                     </div>
                     <img class="card-img-top" src="<?php echo $product->getImageUrl()?>" alt="Card image">
                     <div class="card-body">
-                        <p class="card-text text-muted"><?php echo $product->getName();?></p>
+                        <a href="/feedback"><h5 class="card-text text-muted"><?php echo $product->getName();?></h5></a>
                         <a href="#"><h5 class="card-title"><?php echo $product->getDescription();?></h5></a>
                         <div class="card-footer">
                             <?php echo $product->getPrice();?>

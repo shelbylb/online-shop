@@ -64,7 +64,7 @@ class Order extends Model
 
     }
 
-    public function getId(): int
+    public function getOrderId(): int
     {
         return $this->id;
     }

@@ -2,6 +2,7 @@
 
 
 use Controllers\CartController;
+use Controllers\FeedbackController;
 use Controllers\OrderController;
 use Controllers\ProductController;
 use Controllers\UserController;
@@ -29,4 +30,6 @@ $app->get('/logout', UserController::class, 'logout');
 $app->get('/create-order', OrderController::class, 'getCheckOut');
 $app->post('/create-order', OrderController::class, 'handleCheckOut');
 $app->get('/orders', OrderController::class, 'getPageOrders');
+$app->get('/feedback', FeedbackController::class, 'getFeedback');
+//$app->post('/feedback', FeedbackController::class, 'getFeedback');
 $app->run();
