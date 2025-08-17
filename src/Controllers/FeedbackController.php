@@ -65,12 +65,16 @@ class FeedbackController extends BaseController
 
         $user = $this->authService->getCurrentUser();
         $orders = $this->orderModel->getAllByUserId($user->getId());
-        $productFromOrder = $this->orderProductModel->getAllByOrderId();
+        $productId = $_SESSION['productId'];
 
         $flag = false;
-        foreach ($productFromOrder as $product) {
+        foreach ($orders as $order) {
 
-            if($product == "?") {
+            $orderId = $order->getOrderId();
+            $productFromOrder = $this->orderProductModel->getAllByOrderId($orderId);
+            $productIdByOrder = $productFromOrder->getProductId();
+
+            if($productIdByOrder == $productId) {
                 $flag = true;
                 break;
             }
@@ -84,6 +88,7 @@ class FeedbackController extends BaseController
 
         return $errors;
     }
+
 
 
     public function getFeedback(){

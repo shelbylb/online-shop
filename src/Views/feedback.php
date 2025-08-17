@@ -10,14 +10,14 @@
 <div class="product-card">
     <!-- Блок с изображением товара -->
     <div class="product-image">
-        <img src="product.jpg" alt="Изображение товара">
+        <img src="<?php echo $product->getImageUrl()?>" alt="Изображение товара">
     </div>
 
     <!-- Блок с информацией о товаре -->
     <div class="product-info">
-        <h2 class="product-title">Смартфон Apple iPhone 15 Pro Max</h2>
-        <div class="product-price">49 990 ₽</div>
-        <p class="product-description">Описание товара...</p>
+        <h2 class="product-title"><?php echo $product->getName();?></h2>
+        <div class="product-price"><?php echo $product->getPrice();?></div>
+        <p class="product-description"><?php echo $product->getDescription();?></p>
     </div>
 
     <!-- Форма для отзыва -->
@@ -46,6 +46,7 @@
 </div>
 </body>
 </html>
+
 
 
 <style>

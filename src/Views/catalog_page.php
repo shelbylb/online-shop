@@ -11,8 +11,16 @@
                     </div>
                     <img class="card-img-top" src="<?php echo $product->getImageUrl()?>" alt="Card image">
                     <div class="card-body">
-                        <a href="/feedback"><h5 class="card-text text-muted"><?php echo $product->getName();?></h5></a>
-                        <a href="#"><h5 class="card-title"><?php echo $product->getDescription();?></h5></a>
+                        <form action="/feedback" method="POST">
+                            <div class="container">
+
+                                <input type="hidden"
+                                       value="<?php echo $product->getId() ?>" id="productId">
+
+                                <button type="submit" class="registerbtn"><?php echo $product->getName(); ?></button>
+                            </div>
+                        </form>
+                            <a href="#"><h5 class="card-title"><?php echo $product->getDescription();?></h5></a>
                         <div class="card-footer">
                             <?php echo $product->getPrice();?>
                         </div>
@@ -25,7 +33,7 @@
                     <input type="hidden" placeholder="Введите артикул" name="productId" value="<?php echo $product->getId()?>" id="productId" required>
 
 
-                    <input type="text" placeholder="1" name="amount" id="amount" required>
+                    <input type="text" placeholder="1" name="amount" id="amount" >
 
                     <button type="submit" class="registerbtn">+</button>
                 </div>
@@ -37,7 +45,7 @@
                     <input type="hidden" placeholder="Введите артикул" name="productId" value="<?php echo $product->getId()?>" id="productId" required>
 
 
-                    <input type="text" placeholder="1" name="amount" id="amount" required>
+                    <input type="text" placeholder="1" name="amount" id="amount" >
 
                     <button type="submit" class="registerbtn">-</button>
                 </div>

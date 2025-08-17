@@ -31,5 +31,5 @@ $app->get('/create-order', OrderController::class, 'getCheckOut');
 $app->post('/create-order', OrderController::class, 'handleCheckOut');
 $app->get('/orders', OrderController::class, 'getPageOrders');
 $app->get('/feedback', FeedbackController::class, 'getFeedback');
-//$app->post('/feedback', FeedbackController::class, 'getFeedback');
+$app->post('/feedback', FeedbackController::class, 'getFeedback');
 $app->run();

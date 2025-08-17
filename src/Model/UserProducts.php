@@ -65,13 +65,15 @@ class UserProducts extends Model
 
     }
 
-    public function checkProduct(int $productId, int $userId): self | null
+    public function checkProduct(int $userId, int $productId): self | null
     {
-        $stmt = $this->PDO->prepare("SELECT * FROM {$this->getTableName()} WHERE product_id = :productId AND user_id = :userId");
+        
+        $stmt = $this->PDO->prepare("SELECT * FROM {$this->getTableName()} WHERE (product_id = :productId AND user_id = :userId)");
         $stmt->execute(['productId' => $productId, 'userId' => $userId]);
         $data = $stmt->fetch();
 
-        if ($data === []){
+
+        if ($data === false){
             return null;
         }
 
@@ -86,11 +88,10 @@ class UserProducts extends Model
 
     public function add(int $userId, int $productId, int $amount)
     {
-        $stmt = $this->PDO->prepare("INSERT INTO {$this->getTableName()} (user_id, product_id, amount)
-
+        $stmt = $this->PDO->prepare("INSERT INTO {$this->getTableName()} (user_id, product_id, amount) 
         VALUES (:userId, :productId, :amount)");
 
-        $stmt->execute(['userId' => $_SESSION['userId'], 'productId' => $productId, 'amount' => $amount]);
+        $stmt->execute(['userId' => $userId, 'productId' => $productId, 'amount' => $amount]);
     }
 
     public function update(int $userId, int $productId, int $amount)

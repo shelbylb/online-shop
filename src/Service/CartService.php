@@ -8,15 +8,16 @@ class CartService
 {
     private UserProducts $userProducts;
 
-    public function ___construct()
+    public function __construct()
     {
         $this->userProducts = new UserProducts();
 
     }
 
-    public function addProduct(int $productId, int $userId, int $amount)
+    public function addProduct(int $productId, int $amount, int $userId)
     {
         $product = $this->userProducts->checkProduct($userId, $productId);
+        
 
         if($product){
             $amount = $product->getAmount() + $amount;

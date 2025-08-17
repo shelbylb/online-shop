@@ -28,7 +28,7 @@ class CartController extends BaseController
 
             if (empty($errors)) {
 
-                $this->cartService->addProduct($data['productId'], $data['userId'], $data ['amount']);
+                $this->cartService->addProduct($data['productId'], (int) $data ['amount'], $user->getId());
 
             }
 
@@ -46,10 +46,11 @@ class CartController extends BaseController
             $errors = $this->validateAddCart($_POST);
             $user = $this->authService->getCurrentUser();
             $data = $_POST;
+            print_r($data);
 
             if (empty($errors)) {
 
-                $this->cartService->decreaseProduct($data['productId'], $data['userId'], $data ['amount']);
+                $this->cartService->decreaseProduct($user->getId(), $data['productId'], $data ['amount']);
 
             }
 
