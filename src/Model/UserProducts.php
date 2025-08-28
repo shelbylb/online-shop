@@ -57,7 +57,7 @@ class UserProducts extends Model
         $obj = new self();
         $obj->id = $product['id'];
         $obj->name = $product['name'];
-        $obj->description = $product['discription'];
+        $obj->description = $product['description'];
         $obj->price = $product['price'];
         $obj->imageUrl = $product['image_url'];
 
@@ -67,7 +67,7 @@ class UserProducts extends Model
 
     public function checkProduct(int $userId, int $productId): self | null
     {
-        
+
         $stmt = $this->PDO->prepare("SELECT * FROM {$this->getTableName()} WHERE (product_id = :productId AND user_id = :userId)");
         $stmt->execute(['productId' => $productId, 'userId' => $userId]);
         $data = $stmt->fetch();
@@ -77,11 +77,11 @@ class UserProducts extends Model
             return null;
         }
 
-            $productObg = new self();
-            $productObg->id = $data['id'];
-            $productObg->userId = $data['user_id'];
-            $productObg->productId = $data['product_id'];
-            $productObg->amount = $data['amount'];
+        $productObg = new self();
+        $productObg->id = $data['id'];
+        $productObg->userId = $data['user_id'];
+        $productObg->productId = $data['product_id'];
+        $productObg->amount = $data['amount'];
 
         return $productObg;
     }
@@ -104,6 +104,11 @@ class UserProducts extends Model
     public function deleteByUserId(int $userId){
         $stmt = $this->PDO->prepare("DELETE FROM {$this->getTableName()} WHERE user_id = :userId");
         $stmt->execute(['userId' => $userId]);
+    }
+
+    public function deleteProduct(int $userId, int $productId){
+        $stmt = $this->PDO->prepare("DELETE FROM {$this->getTableName()} WHERE user_id = :userId AND product_id = :productId");
+        $stmt->execute(['userId' => $userId, 'productId' => $productId]);
     }
 
     public function getId(): int

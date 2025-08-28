@@ -1,7 +1,7 @@
 <?php
 
 
-use Controllers\CartController;
+use Controllers\UserProductsController;
 use Controllers\FeedbackController;
 use Controllers\OrderController;
 use Controllers\ProductController;
@@ -23,9 +23,9 @@ $app->get('/profile', UserController::class, 'getProfile');
 $app->get('/edit-profile', UserController::class, 'getEditProfile');
 $app->post('/edit-profile', UserController::class, 'editProfile');
 $app->get('/catalog', ProductController::class, 'getCatalog');
-$app->post('/add-cart', CartController::class, 'addCart');
-$app->post('/decrease-cart', CartController::class, 'decreaseCart');
-$app->get('/cart', CartController::class, 'getCart');
+$app->post('/add-cart', UserProductsController::class, 'addCart');
+$app->post('/decrease-cart', UserProductsController::class, 'decreaseCart');
+$app->get('/cart', UserProductsController::class, 'getCart');
 $app->get('/logout', UserController::class, 'logout');
 $app->get('/create-order', OrderController::class, 'getCheckOut');
 $app->post('/create-order', OrderController::class, 'handleCheckOut');

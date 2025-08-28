@@ -31,7 +31,7 @@ class Product extends Model
             $orderObj = new self();
             $orderObj->id = $catalog['id'];
             $orderObj->name = $catalog['name'];
-            $orderObj->description = $catalog['discription'];
+            $orderObj->description = $catalog['description'];
             $orderObj->price = $catalog['price'];
             $orderObj->imageUrl = $catalog['image_url'];
             $array[] = $orderObj;

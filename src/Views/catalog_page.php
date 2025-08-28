@@ -1,6 +1,8 @@
 <div class="container">
     <a href="/profile">Мой профиль</a>
     <a href="/cart">Корзина</a>
+    <a href="/login">Войти</a>
+    <a href="/registration">Зарегистрироваться</a>
     <h3>Catalog</h3>
     <div class="card-deck">
         <?php foreach ($products as $product): ?>
@@ -14,13 +16,12 @@
                         <form action="/feedback" method="POST">
                             <div class="container">
 
-                                <input type="hidden"
-                                       value="<?php echo $product->getId() ?>" id="productId">
+                                <input type="hidden" name="productId" value="<?php echo $product->getId() ?>" id="productId">
 
                                 <button type="submit" class="registerbtn"><?php echo $product->getName(); ?></button>
                             </div>
                         </form>
-                            <a href="#"><h5 class="card-title"><?php echo $product->getDescription();?></h5></a>
+                        <a href="#"><h5 class="card-title"><?php echo $product->getDescription();?></h5></a>
                         <div class="card-footer">
                             <?php echo $product->getPrice();?>
                         </div>
@@ -30,7 +31,7 @@
             <form action="/add-cart" method="POST">
                 <div class="container">
 
-                    <input type="hidden" placeholder="Введите артикул" name="productId" value="<?php echo $product->getId()?>" id="productId" required>
+                    <input type="hidden" name="productId" value="<?php echo $product->getId()?>" id="productId" required>
 
 
                     <input type="text" placeholder="1" name="amount" id="amount" >
@@ -42,7 +43,7 @@
             <form action="/decrease-cart" method="POST">
                 <div class="container">
 
-                    <input type="hidden" placeholder="Введите артикул" name="productId" value="<?php echo $product->getId()?>" id="productId" required>
+                    <input type="hidden" name="productId" value="<?php echo $product->getId()?>" id="productId" required>
 
 
                     <input type="text" placeholder="1" name="amount" id="amount" >

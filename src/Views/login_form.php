@@ -1,4 +1,5 @@
 <div class="wrapper">
+    <a href="/registration">Зарегистрироваться</a>
     <form class="form-signin" action="/login" method="POST">
         <h2 class="form-signin-heading">Please login</h2>
 

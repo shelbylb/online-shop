@@ -1,6 +1,7 @@
 <div class="container">
     <a href="/profile">Мой профиль</a>
-    <a href="/cart">Корзина</a>
+    <a href="/catalog">Католог</a>
+    <a href="/orders">Мои заказы</a>
     <h3>Корзина</h3>
     <div class="card-deck">
         <?php foreach ($productsCart as $product): ?>
@@ -24,7 +25,7 @@
                     <input type="hidden" placeholder="Введите артикул" name="productId" value="<?php echo $product->getId()?>" id="productId" required>
 
 
-                    <input type="text" placeholder="1" name="amount" id="amount" required>
+                    <input type="text" placeholder="1" name="amount" id="amount" >
 
                     <button type="submit" class="registerbtn">+</button>
                 </div>
@@ -36,12 +37,13 @@
                     <input type="hidden" placeholder="Введите артикул" name="productId" value="<?php echo $product->getId()?>" id="productId" required>
 
 
-                    <input type="text" placeholder="1" name="amount" id="amount" required>
+                    <input type="text" placeholder="1" name="amount" id="amount" >
 
                     <button type="submit" class="registerbtn">-</button>
                 </div>
 
             </form>
+            <a href="/create-order" method="POST">Оформить заказ</a>
         <?php endforeach; ?>
     </div>
 </div>

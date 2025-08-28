@@ -5,16 +5,17 @@ namespace Controllers;
 use Model\UserProducts;
 use Service\AuthService;
 use Service\CartService;
+use DTO\UserProductsDTO;
 
-class CartController extends BaseController
+class UserProductsController extends BaseController
 {
-    private UserProducts $cartModel;
+    private UserProducts $UserProductsModel;
     private CartService $cartService;
 
     public function __construct()
     {
         parent:: __construct();
-        $this->cartModel = new UserProducts();
+        $this->UserProductsModel = new UserProducts();
         $this->cartService = new CartService();
     }
 
@@ -24,11 +25,19 @@ class CartController extends BaseController
 
             $errors = $this->validateAddCart($_POST);
             $user = $this->authService->getCurrentUser();
-            $data = $_POST;
 
             if (empty($errors)) {
 
-                $this->cartService->addProduct($data['productId'], (int) $data ['amount'], $user->getId());
+
+
+                $dto = new UserProductsDTO(
+                    $_POST["productId"],
+                    $_POST["amount"],
+                    $user
+                );
+
+                $this->cartService->addProduct($dto);
+
 
             }
 
@@ -45,12 +54,16 @@ class CartController extends BaseController
 
             $errors = $this->validateAddCart($_POST);
             $user = $this->authService->getCurrentUser();
-            $data = $_POST;
-            print_r($data);
 
             if (empty($errors)) {
+                $dto = new UserProductsDTO(
+                    $_POST["productId"],
+                    $_POST["amount"],
+                    $user
+                );
 
-                $this->cartService->decreaseProduct($user->getId(), $data['productId'], $data ['amount']);
+                $this->cartService->decreaseProduct($dto);
+
 
             }
 
@@ -61,14 +74,16 @@ class CartController extends BaseController
         }
     }
 
-    private function validateAddCart(array $data): array
+    private function validateAddCart(array $data)
     {
         $errors = [];
 
+
         if (isset($data['amount'])) {
+
             $amount = (int)$data['amount'];
 
-            if ($amount < 0 && $amount > 100) {
+            if ($amount < 0 || $amount > 100) {
                 $errors['amount'] = 'Введите колличество товара от 1 до 100';
             }
         }
@@ -85,7 +100,7 @@ class CartController extends BaseController
             $user = $this->authService->getCurrentUser();
 
 
-            $userProducts = $this->cartModel->getAllUserProductsByUserId($user->getId());
+            $userProducts = $this->UserProductsModel->getAllUserProductsByUserId($user->getId());
 
             $productsCart = [];
 

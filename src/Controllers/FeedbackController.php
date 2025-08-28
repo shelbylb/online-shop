@@ -92,8 +92,10 @@ class FeedbackController extends BaseController
 
 
     public function getFeedback(){
-        $data = $_POST;
-        $feedbacks = $this->feedback->getAllFeedbackByProductId($data['productId']);
+        $productId = $_POST['productId'];
+        var_dump($_POST);
+        $feedbacks = $this->feedback->getAllFeedbackByProductId($productId);
+        $product = $this -> productModel -> getOneById($productId);
         require_once '../Views/feedback.php';
     }
 

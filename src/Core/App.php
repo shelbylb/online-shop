@@ -2,7 +2,7 @@
 
 namespace Core;
 
-use Controllers\CartController;
+use Controllers\UserProductsController;
 use Controllers\OrderController;
 use Controllers\ProductController;
 use Controllers\UserController;
@@ -30,10 +30,10 @@ class App
 
 
                 $controller = new $class();
-                $controller->$method();
+                $controller->$method($_POST);
 
             } else {
-                echo "$routesMethod не поддерживаетсядля $requestUri";
+                echo "$routesMethod не поддерживается для $requestUri";
             }
 
         } else {

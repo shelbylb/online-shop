@@ -2,6 +2,7 @@
 
 namespace Controllers;
 
+use DTO\OrderCreateDTO;
 use Model\UserProducts;
 use Model\Order;
 use Model\OrderProduct;
@@ -47,20 +48,24 @@ class OrderController extends BaseController
             header("Location: /login");
             exit();
         }
+        print_r($_POST);
 
 
         $errors = $this->validate($_POST);
+        print_r($errors);
 
         if (empty($errors)) {
 
             $user = $this->authService->getCurrentUser();
 
-            $this->orderService->createOrder(
+            $dto = new OrderCreateDTO(
                 $_POST["contact_name"],
                 $_POST["contact_phone"],
                 $_POST["comment"],
                 $_POST["address"],
-                $user->getId());
+                $user);
+
+            $this->orderService->createOrder($dto);
 
 
         } else {
@@ -69,12 +74,12 @@ class OrderController extends BaseController
     }
     private function validate(array $data): array
     {
-//сделать валидацию по заполняемым данным в форме заказа
+
         $errors = [];
 
-        if (isset($data['name'])) {
+        if (isset($data['contact_name'])) {
 
-            $name = $data["name"];
+            $name = $data['contact_name'];
             if (strlen($name) < 2) {
                 $errors['name'] = 'Имя должно быть больше двух символов';
             }
