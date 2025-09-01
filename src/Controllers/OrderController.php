@@ -7,6 +7,7 @@ use Model\UserProducts;
 use Model\Order;
 use Model\OrderProduct;
 use Model\Product;
+use Request\HandleCheckOutRequest;
 
 
 class OrderController extends BaseController
@@ -41,28 +42,26 @@ class OrderController extends BaseController
 
     }
 
-    public function handleCheckOut()
+    public function handleCheckOut(HandleCheckOutRequest $request)
     {
 
-        if ($this->authService->check()) {
+        if (!$this->authService->check()) {
             header("Location: /login");
             exit();
         }
-        print_r($_POST);
 
 
-        $errors = $this->validate($_POST);
-        print_r($errors);
+        $errors = $request->validate();
 
         if (empty($errors)) {
 
             $user = $this->authService->getCurrentUser();
 
             $dto = new OrderCreateDTO(
-                $_POST["contact_name"],
-                $_POST["contact_phone"],
-                $_POST["comment"],
-                $_POST["address"],
+                $request->getContactName(),
+                $request->getContactPhone(),
+                $request->getComment(),
+                $request->getAddress(),
                 $user);
 
             $this->orderService->createOrder($dto);
@@ -71,41 +70,10 @@ class OrderController extends BaseController
         } else {
             require_once '../Views/order_form.php';
         }
+
+        header('Location: /catalog');
     }
-    private function validate(array $data): array
-    {
 
-        $errors = [];
-
-        if (isset($data['contact_name'])) {
-
-            $name = $data['contact_name'];
-            if (strlen($name) < 2) {
-                $errors['name'] = 'Имя должно быть больше двух символов';
-            }
-        } else {
-            $errors['name'] = 'Поле  должно быть заполнено';
-        }
-
-
-        if (isset($data['contact_phone'])) {
-            $contactPhone = $data["contact_phone"];
-            if (strlen($contactPhone) === 11) {
-                $errors['contact_phone'] = 'Номер должен состоять из 11 симовлов';
-
-            }
-        } else {
-            $errors['contact_phone'] = 'Поле  должно быть заполнено';
-        }
-
-        if (!isset($data['address'])) {
-
-
-            $errors['address'] = 'Поле  должно быть заполнено';
-        }
-
-        return $errors;
-    }
 
 
     public function getAllOrders()

@@ -16,17 +16,17 @@
         <?php endif; ?>
         <input type="text" placeholder="Enter Email" name="email" id="email" required>
 
-        <label for="psw"><b>Password</b></label>
-        <?php if  (isset($error['psw'])): ?>
-        <?php echo $error['psw']; ?>
+        <label for="password"><b>Password</b></label>
+        <?php if  (isset($error['password'])): ?>
+        <?php echo $error['password']; ?>
         <?php endif; ?>
-        <input type="password" placeholder="Enter Password" name="psw" id="psw" required>
+        <input type="password" placeholder="Enter Password" name="password" id="password" required>
 
-        <label for="psw-repeat"><b>Repeat Password</b></label>
-        <?php if  (isset($error['psw-repeat'])): ?>
-        <?php echo $error['psw-repeat']; ?>
+        <label for="password-repeat"><b>Repeat Password</b></label>
+        <?php if  (isset($error['password-repeat'])): ?>
+        <?php echo $error['password-repeat']; ?>
         <?php endif; ?>
-        <input type="password" placeholder="Repeat Password" name="psw-repeat" id="psw-repeat" required>
+        <input type="password" placeholder="Repeat Password" name="password-repeat" id="password-repeat" required>
         <hr>
 
         <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>

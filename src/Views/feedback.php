@@ -23,7 +23,7 @@
     <!-- Форма для отзыва -->
     <div class="review-form">
         <h3>Оставить отзыв</h3>
-        <form action="#" method="post">
+        <form action="#" method="post">  <!--добавить ссылку-->
             <!-- Блок рейтинга -->
             <div class="rating-container">
                 <input type="radio" id="star1" name="rating" value="1">

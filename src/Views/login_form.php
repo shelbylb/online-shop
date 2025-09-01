@@ -4,10 +4,10 @@
         <h2 class="form-signin-heading">Please login</h2>
 
 
-        <?php if  (isset($errors['username'])): ?>
-        <?php echo $errors['username']; ?>
+        <?php if  (isset($errors['email'])): ?>
+        <?php echo $errors['email']; ?>
         <?php endif; ?>
-        <input type="text" class="form-control" name="username" placeholder="Email Address" required="" autofocus="" />
+        <input type="text" class="form-control" name="email" placeholder="Email Address" required="" autofocus="" />
 
 
         <?php if  (isset($errors['password'])): ?>

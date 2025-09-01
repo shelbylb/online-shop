@@ -33,6 +33,12 @@ class Order extends Model
             'user_id'=>$userId
         ]);
 
+        // Получаем возвращенный ID
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // Возвращаем ID нового заказа
+        return $result['id'] ?? null;
+
     }
 
     public function getAllByUserId(int $userId): array|null

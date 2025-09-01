@@ -2,7 +2,11 @@
 
 namespace Controllers;
 
+use DTO\AuthDTO;
 use Model\User;
+use Request\RegisrateRequest;
+use Request\LoginRequest;
+use Request\EditProfileRequest;
 
 
 class UserController extends BaseController
@@ -25,16 +29,16 @@ class UserController extends BaseController
         require_once '../Views/registration_form.php';
     }
 
-    public function registrate()
+    public function registrate(RegisrateRequest $request)
     {
 
-        $error = $this->validateRegistrate($_POST);
+        $error = $request->validate();
 
         if (empty($error)) {
 
-            $name = $_POST["name"];
-            $email = $_POST["email"];
-            $password = $_POST["psw"];
+            $name = $request->getName();
+            $email = $request->getEmail();
+            $password = $request->getPassword();
 
             $password = password_hash($password, PASSWORD_DEFAULT);
 
@@ -54,58 +58,7 @@ class UserController extends BaseController
 
     }
 
-    private function validateRegistrate(array $data): array
-    {
-        $error = [];
 
-        if (isset($data['name'])) {
-
-            $name = $data["name"];
-            if (strlen($name) < 2) {
-                $error['name'] = 'Имя должно быть больше двух символов';
-            }
-        } else {
-            $error['name'] = 'Поле  должно быть заполнено';
-        }
-
-
-        if (isset($data['email'])) {
-            $email = $data["email"];
-            if (strlen($email) < 2) {
-                $error['email'] = 'Email должно быть больше двух символов';
-            } elseif (filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
-                $error['email'] = 'Email некорректный';
-            } else {
-
-                $user = $this->userModel->getByEmail($email);
-
-                if ($user !== null) {
-                    $error['email'] = 'Email уже зарегистрирован';
-                }
-            }
-
-        } else {
-            $error['email'] = 'Поле  должно быть заполнено';
-        }
-
-
-        if (isset($data['psw'])) {
-            $password = $data["psw"];
-            if (strlen($password) < 5) {
-                $error['psw'] = 'Пароль должен состоять минимум из пяти символов';
-
-                $password_repeat = $data["psw-repeat"];
-                if ($password != $password_repeat) {
-                    $error['psw-repeat'] = 'пароли несовпадают';
-                }
-            }
-        } else {
-            $error['psw'] = 'Поле  должно быть заполнено';
-        }
-
-
-        return $error;
-    }
 
 
     public function getLogin()
@@ -118,15 +71,16 @@ class UserController extends BaseController
         require_once '../Views/login_form.php';
     }
 
-    public function login()
+    public function login(LoginRequest $request)
     {
-        $errors = $this->validateLogin($_POST);
+        $errors = $request->validate();
 
 
         if (empty($errors)) {
 
+            $dto = new AuthDTO($request->getEmail(), $request->getPassword());
 
-            $result = $this->authService->auth($_POST['username'], $_POST['password']);
+            $result = $this->authService->auth($dto);
 
             if ($result) {
 
@@ -141,19 +95,7 @@ class UserController extends BaseController
     }
 
 
-    private function validateLogin(array $data): array
-    {
-        $errors = [];
-        if (!isset($data['username'])) {
-            $errors['username'] = 'Поле должно  быть заполнено';
-        }
 
-        if (!isset($data['password'])) {
-            $errors['password'] = 'Поле должно  быть заполнено';
-        }
-
-        return $errors;
-    }
 
 
     public function getProfile()
@@ -177,16 +119,16 @@ class UserController extends BaseController
         }
     }
 
-    public function editProfile()
+    public function editProfile(EditProfileRequest $request)
     {
         if ($this->authService->check()) {
             $user = $this->authService->getCurrentUser();
 
-            $error = $this->validateEditProfile($_POST);
+            $error = $request->validate();
 
             if (empty($error)) {
-                $name = $_POST["name"];
-                $email = $_POST["email"];
+                $name = $request->getName();
+                $email = $request->getEmail();
                 $userId = $user->getId();
 
 
@@ -212,40 +154,6 @@ class UserController extends BaseController
     }
 
 
-    private function validateEditProfile(array $data): array
-    {
-        $error = [];
-
-        if (isset($data['name'])) {
-
-            $name = $data["name"];
-            if (!empty($email) && strlen($name) < 2) {
-                $error['name'] = 'Имя должно быть больше двух символов';
-            }
-        }
-
-
-        if (isset($data['email'])) {
-            $email = $data["email"];
-            if (!empty($email) && strlen($email) < 2) {
-                $error['email'] = 'Email должно быть больше двух символов';
-            } elseif (!empty($email) && filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
-                $error['email'] = 'Email некорректный';
-            } else {
-                $user = $this->userModel->getByEmail($email);
-
-                $userId = $_SESSION['userId'];
-
-                if ($user !== null) {
-                    if ($user->getId() !== $userId) {
-                        $error['email'] = 'Email уже зарегистрирован';
-                    }
-                }
-            }
-
-        }
-        return $error;
-    }
 
 
     public function logout()

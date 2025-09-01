@@ -7,6 +7,8 @@ use Model\OrderProduct;
 use Model\Product;
 use Model\UserProducts;
 use Model\Feedback;
+use Request\AddFeedbackRequest;
+use Request\GetFeedbackRequest;
 
 class FeedbackController extends BaseController
 {
@@ -30,11 +32,11 @@ class FeedbackController extends BaseController
     }
 
 
-    public function addFeedback()
+    public function addFeedback(AddFeedbackRequest $request)
 
     {
 
-        $errors = $this->validate($_POST);
+        $errors = $request->validate();
 
         if (empty($errors)) {
 
@@ -43,57 +45,24 @@ class FeedbackController extends BaseController
             $this->feedback->addFeedback(
 
                 $user->getId(),
+                $request->getProductId(),
+                $request->getComment(),
+                $request->getScore()
+            );
 
-                $_POST["product_id"],
 
-                $_POST["score"],
 
-                $_POST["comment"]);
-        }
-    }
-
-    public function validate()
-    {
-
-        $errors = [];
-
-        if (!isset($data['score'])) {
-
-            $errors['score'] = "Поставьте Вашу оценку";
 
         }
-
-        $user = $this->authService->getCurrentUser();
-        $orders = $this->orderModel->getAllByUserId($user->getId());
-        $productId = $_SESSION['productId'];
-
-        $flag = false;
-        foreach ($orders as $order) {
-
-            $orderId = $order->getOrderId();
-            $productFromOrder = $this->orderProductModel->getAllByOrderId($orderId);
-            $productIdByOrder = $productFromOrder->getProductId();
-
-            if($productIdByOrder == $productId) {
-                $flag = true;
-                break;
-            }
-
-        }
-
-        if ($flag === false) {
-            $errors['productId'] = "Товара нет в Ваших заказах";
-        }
-
-
-        return $errors;
     }
 
 
 
-    public function getFeedback(){
-        $productId = $_POST['productId'];
-        var_dump($_POST);
+
+
+    public function getFeedback(GetFeedbackRequest $request){
+        $productId = $request->getProductId();
+
         $feedbacks = $this->feedback->getAllFeedbackByProductId($productId);
         $product = $this -> productModel -> getOneById($productId);
         require_once '../Views/feedback.php';

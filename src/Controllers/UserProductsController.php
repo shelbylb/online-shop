@@ -3,6 +3,7 @@
 namespace Controllers;
 
 use Model\UserProducts;
+use Request\UserProductsRequest;
 use Service\AuthService;
 use Service\CartService;
 use DTO\UserProductsDTO;
@@ -19,11 +20,11 @@ class UserProductsController extends BaseController
         $this->cartService = new CartService();
     }
 
-    public function addCart()
+    public function addCart(UserProductsRequest $request)
     {
         if ($this->authService->check()) {
 
-            $errors = $this->validateAddCart($_POST);
+            $errors = $request->validate();
             $user = $this->authService->getCurrentUser();
 
             if (empty($errors)) {
@@ -31,8 +32,8 @@ class UserProductsController extends BaseController
 
 
                 $dto = new UserProductsDTO(
-                    $_POST["productId"],
-                    $_POST["amount"],
+                    $request->getProductId(),
+                    $request->getAmount(),
                     $user
                 );
 
@@ -48,17 +49,17 @@ class UserProductsController extends BaseController
         }
     }
 
-    public function decreaseCart()
+    public function decreaseCart(UserProductsRequest $request)
     {
         if ($this->authService->check()) {
 
-            $errors = $this->validateAddCart($_POST);
+            $errors = $request->validate();
             $user = $this->authService->getCurrentUser();
 
             if (empty($errors)) {
                 $dto = new UserProductsDTO(
-                    $_POST["productId"],
-                    $_POST["amount"],
+                    $request->getProductId(),
+                    $request->getAmount(),
                     $user
                 );
 
@@ -74,22 +75,7 @@ class UserProductsController extends BaseController
         }
     }
 
-    private function validateAddCart(array $data)
-    {
-        $errors = [];
 
-
-        if (isset($data['amount'])) {
-
-            $amount = (int)$data['amount'];
-
-            if ($amount < 0 || $amount > 100) {
-                $errors['amount'] = 'Введите колличество товара от 1 до 100';
-            }
-        }
-
-        return $errors;
-    }
 
     public function getCart()
     {
