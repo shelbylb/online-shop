@@ -8,6 +8,7 @@ use Model\Order;
 use Model\OrderProduct;
 use Model\Product;
 use Request\HandleCheckOutRequest;
+use Service\CartService;
 
 
 class OrderController extends BaseController
@@ -17,6 +18,7 @@ class OrderController extends BaseController
     private UserProducts $userProduct;
     private OrderProduct $orderProductModel;
     private Product $productModel;
+    private CartService $cartService;
 
 
 
@@ -26,6 +28,7 @@ class OrderController extends BaseController
         $this->userProduct = new UserProducts();
         $this->orderProductModel = new OrderProduct();
         $this->productModel = new Product();
+        $this->cartService = new CartService();
 
 
     }
@@ -50,19 +53,21 @@ class OrderController extends BaseController
             exit();
         }
 
-
         $errors = $request->validate();
+
+        $userProducts = $this->cartService->getUserProducts();
+        $totalSum =$this->cartService->getSum();
+
+
 
         if (empty($errors)) {
 
-            $user = $this->authService->getCurrentUser();
 
             $dto = new OrderCreateDTO(
                 $request->getContactName(),
                 $request->getContactPhone(),
                 $request->getComment(),
-                $request->getAddress(),
-                $user);
+                $request->getAddress());
 
             $this->orderService->createOrder($dto);
 

@@ -34,7 +34,8 @@
                     <input type="hidden" name="productId" value="<?php echo $product->getId()?>" id="productId" required>
 
 
-                    <input type="text" placeholder="1" name="amount" id="amount" >
+                    <input type="number" placeholder="1" name="amount" id="amount" value="1" min="1">
+
 
                     <button type="submit" class="registerbtn">+</button>
                 </div>
@@ -46,7 +47,8 @@
                     <input type="hidden" name="productId" value="<?php echo $product->getId()?>" id="productId" required>
 
 
-                    <input type="text" placeholder="1" name="amount" id="amount" >
+                    <input type="number" placeholder="1" name="amount" id="amount" value="1" min="1">
+
 
                     <button type="submit" class="registerbtn">-</button>
                 </div>

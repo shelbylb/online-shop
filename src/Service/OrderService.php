@@ -14,6 +14,7 @@ class OrderService
 
     private User $userModel;
     private OrderProduct $orderProductModel;
+    private AuthService $authService;
 
     public function __construct()
     {
@@ -21,24 +22,25 @@ class OrderService
         $this->userProducts = new UserProducts();
         $this->userModel = new User();
         $this->orderProductModel = new OrderProduct();
+        $this->authService = new AuthService();
 
     }
 
     public function createOrder(OrderCreateDTO $data)
 
     {
-
+        $user = $this->authService->getCurrentUser();
 
         $orderId = $this->orderModel->create(
             $data->getContactName(),
             $data->getContactPhone(),
             $data->getComment(),
             $data->getAddress(),
-            $data->getUserId()->getId());
+            $user->getId());
 
 
 
-        $userProducts = $this->userProducts->getAllUserProductsByUserId($data->getUserId()->getId());
+        $userProducts = $this->userProducts->getAllUserProductsByUserId($user->getId());
 
 
         foreach ($userProducts as $userProduct) {
@@ -49,7 +51,7 @@ class OrderService
             }
 
             //удаляет товары из корзины
-            $this->userProducts->deleteByUserId($data->getUserId()->getId());
+            $this->userProducts->deleteByUserId($user->getId());
 
     }
 }

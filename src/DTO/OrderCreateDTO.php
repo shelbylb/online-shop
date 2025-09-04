@@ -12,8 +12,7 @@ class OrderCreateDTO
         private string $contactName,
         private string $contactPhone,
         private string $comment,
-        private string $address,
-        private User   $userId)
+        private string $address)
     {
 
     }

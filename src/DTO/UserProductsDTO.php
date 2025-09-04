@@ -8,8 +8,7 @@ class UserProductsDTO
 {
     public function __construct(
         private int $productId,
-        private int $amount,
-        private User $userId)
+        private int $amount)
     {
 
     }
