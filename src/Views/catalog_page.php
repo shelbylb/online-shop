@@ -45,7 +45,9 @@
                 <div class="container">
 
                     <input type="hidden" name="productId" value="<?php echo $product->getId()?>" id="productId" required>
-                    <?=$product->getId()?>
+                    <?php foreach ($userProducts as $product): ?>
+                    <?=$product->getAmount()?>
+                    <?php endforeach; ?>
 
 
                     <input type="number" placeholder="1" name="amount" id="amount" value="1" min="1">
@@ -78,6 +80,12 @@
 
     .card {
         max-width: 16rem;
+    }
+
+    .card-img-top {
+        width: 100%;
+        height: auto;
+        max-width: 200px;    /* Ограничение максимальной ширины */
     }
 
     .card:hover {

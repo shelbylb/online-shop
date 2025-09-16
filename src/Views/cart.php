@@ -22,7 +22,7 @@
             <form action="/add-cart" method="POST">
                 <div class="container">
 
-                    <input type="hidden" placeholder="Введите артикул" name="productId" value="<?php echo $product->getId()?>" id="productId" required>
+                    <input type="hidden" placeholder="Введите артикул" name="productId" value="<?php echo $product->getProductId()?>" id="productId" required>
 
 
                     <input type="number" placeholder="1" name="amount" id="amount" value="1" min="1">
@@ -35,8 +35,8 @@
             <form action="/decrease-cart" method="POST">
                 <div class="container">
 
-                    <input type="hidden" name="productId" value="<?php echo $product->getId()?>" id="productId" required>
-                    <?=$product->getId()?>
+                    <input type="hidden" name="productId" value="<?php echo $product->getProductId()?>" id="productId" required>
+                    <?=$product->getAmount()?>
 
 
                     <input type="number" placeholder="1" name="amount" id="amount" value="1" min="1">
@@ -70,6 +70,12 @@
 
     .card {
         max-width: 16rem;
+    }
+
+    .card-img-top {
+        width: 100%;
+        height: auto;
+        max-width: 200px;    /* Ограничение максимальной ширины */
     }
 
     .card:hover {

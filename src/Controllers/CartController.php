@@ -7,7 +7,7 @@ use Request\AddCartRequest;
 use Service\CartService;
 use DTO\UserProductsDTO;
 
-class UserProductsController extends BaseController
+class CartController extends BaseController
 {
     private CartService $cartService;
 
@@ -69,20 +69,6 @@ class UserProductsController extends BaseController
 
             $userProducts = $this->cartService->getUserProducts();
 
-//            $user = $this->authService->getCurrentUser();
-//
-//
-//            $userProducts = $this->UserProductsModel->getAllUserProductsByUserId($user->getId());
-//
-//            $productsCart = [];
-//
-//            foreach ($userProducts as $userProduct) {
-//                $productId = $userProduct->getProductId();
-//                $product = $userProduct->getById($productId);
-//                $product->setAmount($userProduct->getAmount());
-//                $productsCart[] = $product;
-//
-//            }
             require_once '../Views/cart.php';
         } else {
             header("Location: /login");

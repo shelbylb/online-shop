@@ -53,26 +53,7 @@ class OrderController extends BaseController
 
         $userOrders = $this->orderService->getAll();
         echo  '<pre>';
-        //print_r($userOrders);
-
-        foreach ($userOrders as $userOrder) {
-            //echo $userOrder->getId() . '<br>';
-            echo  '<br>';
-            echo $userOrder->getContactName() . '<br>';
-            echo $userOrder->getContactPhone() . '<br>';
-            echo $userOrder->getAddress() . '<br>';
-            echo $userOrder->getSum() . '<br>';
-
-            foreach ($userOrder->getOrderProducts() as $orderProduct) {
-                //echo $orderProduct->getProductId() . '<br>';
-                $product = $this->productModel->getOneById($orderProduct->getProductId());
-                echo $product->getName() . '<br>';
-
-
-            }
-        }
-
-        //require_once '../Views/orders.php';
+        require_once '../Views/orders.php';
 
     }
 

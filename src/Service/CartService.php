@@ -25,7 +25,7 @@ class CartService
     public function addProduct(UserProductsDTO $data)
     {
         $userId = $this->authService->getCurrentUser();
-        $product = $this->userProducts->checkProduct($data->getProductId(), $data->getProductId());
+        $product = $this->userProducts->checkProduct($userId->getId(), $data->getProductId());
 
         if($product){
             $amount = $product->getAmount() + $data->getAmount();
@@ -42,7 +42,7 @@ class CartService
     public function decreaseProduct(UserProductsDTO $data)
     {
         $userId = $this->authService->getCurrentUser();
-        $product = $this->userProducts->checkProduct($data->getProductId(), $data->getProductId());
+        $product = $this->userProducts->checkProduct($userId->getId(), $data->getProductId());
 
         if($product) {
             $amount = $product->getAmount() - $data->getAmount();
