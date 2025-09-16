@@ -9,22 +9,22 @@ class HandleCheckOutRequest
 
     }
 
-    public function getContactName(): int
+    public function getContactName(): string
     {
         return $this->data["contact_name"];
     }
 
-    public function getContactPhone(): int
+    public function getContactPhone(): string
     {
         return $this->data["contact_phone"];
     }
 
-    public function getComment(): int
+    public function getComment(): string
     {
         return $this->data["comment"];
     }
 
-    public function getAddress(): int
+    public function getAddress(): string
     {
         return $this->data["address"];
     }
@@ -49,7 +49,7 @@ class HandleCheckOutRequest
 
         if (isset($this->data['contact_phone'])) {
             $contactPhone = $this->data["contact_phone"];
-            if (strlen($contactPhone) === 11) {
+            if (strlen($contactPhone) !== 11) {
                 $errors['contact_phone'] = 'Номер должен состоять из 11 симовлов';
 
             }

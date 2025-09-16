@@ -3,45 +3,76 @@
 namespace Controllers;
 
 use DTO\OrderCreateDTO;
-use Model\UserProducts;
-use Model\Order;
-use Model\OrderProduct;
 use Model\Product;
 use Request\HandleCheckOutRequest;
 use Service\CartService;
+use Service\OrderService;
 
 
 class OrderController extends BaseController
 {
 
-    private Order $orderModel;
-    private UserProducts $userProduct;
-    private OrderProduct $orderProductModel;
-    private Product $productModel;
     private CartService $cartService;
-
+    protected OrderService $orderService;
+    private $productModel;
 
 
     public function __construct(){
         parent:: __construct();
-        $this->orderModel = new Order();
-        $this->userProduct = new UserProducts();
-        $this->orderProductModel = new OrderProduct();
-        $this->productModel = new Product();
         $this->cartService = new CartService();
+        $this->orderService = new OrderService();
+        $this->productModel = new Product();
 
 
     }
 
     public function getCheckOut()
     {
-        require_once '../Views/order_form.php';
+        if($this->authService->check()){
+            $userProducts = $this->cartService->getUserProducts();
+            if(empty($userProducts)){
+                header('Location: /catalog');
+                exit();
+            }
+            $totalPrice = $this->cartService->getSum();
+            require_once '../Views/order_form.php';
+        } else{
+            header('Location: /login');
+            exit();
+        }
 
     }
 
     public function getPageOrders()
     {
-        require_once '../Views/orders.php';
+        if (!$this->authService->check()) {
+            header("Location: /login");
+            exit();
+        }
+
+
+        $userOrders = $this->orderService->getAll();
+        echo  '<pre>';
+        //print_r($userOrders);
+
+        foreach ($userOrders as $userOrder) {
+            //echo $userOrder->getId() . '<br>';
+            echo  '<br>';
+            echo $userOrder->getContactName() . '<br>';
+            echo $userOrder->getContactPhone() . '<br>';
+            echo $userOrder->getAddress() . '<br>';
+            echo $userOrder->getSum() . '<br>';
+
+            foreach ($userOrder->getOrderProducts() as $orderProduct) {
+                //echo $orderProduct->getProductId() . '<br>';
+                $product = $this->productModel->getOneById($orderProduct->getProductId());
+                echo $product->getName() . '<br>';
+
+
+            }
+        }
+
+        //require_once '../Views/orders.php';
 
     }
 
@@ -53,15 +84,10 @@ class OrderController extends BaseController
             exit();
         }
 
+
         $errors = $request->validate();
 
-        $userProducts = $this->cartService->getUserProducts();
-        $totalSum =$this->cartService->getSum();
-
-
-
         if (empty($errors)) {
-
 
             $dto = new OrderCreateDTO(
                 $request->getContactName(),
@@ -71,8 +97,10 @@ class OrderController extends BaseController
 
             $this->orderService->createOrder($dto);
 
-
         } else {
+            $userProducts = $this->cartService->getUserProducts();
+            $totalSum =$this->cartService->getSum();
+
             require_once '../Views/order_form.php';
         }
 
@@ -81,7 +109,7 @@ class OrderController extends BaseController
 
 
 
-    public function getAllOrders()
+/*    public function getAllOrders()
     {
         if ($this->authService->check()) {
             header("Location: /login");
@@ -125,7 +153,7 @@ class OrderController extends BaseController
         }
 
 
-    }
+    }*/
 
 
 

@@ -2,20 +2,20 @@
 
 namespace Controllers;
 
-use Model\User;
-use Service\AuthService;
+use Service\Auth\AuthInterface;
+use Service\Auth\AuthSessionService;
 use Service\OrderService;
 
 abstract class BaseController
 {
-    protected AuthService $authService;
-    protected OrderService $orderService;
+    protected AuthInterface $authService;
+
 
 
     public function __construct()
     {
-        $this->authService = new AuthService();
-        $this->orderService = new OrderService();
+        $this->authService = new AuthSessionService();
+
     }
 
 

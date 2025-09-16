@@ -1,6 +1,6 @@
 <div class="container">
     <a href="/profile">Мой профиль</a>
-    <a href="/catalog">Католог</a>
+    <a href="/catalog">Каталог</a>
     <a href="/orders">Мои заказы</a>
     <h3>Корзина</h3>
     <div class="card-deck">
@@ -9,12 +9,12 @@
             <div class="card text-center">
                 <a href="#">
 
-                    <img class="card-img-top" src="<?php echo $product->getImageUrl()?>" alt="Card image">
+                    <img class="card-img-top" src="<?php echo $product->getProduct()->getImageUrl()?>" alt="Card image">
                     <div class="card-body">
-                        <p class="card-text text-muted"><?php echo $product->getName();?></p>
-                        <a href="#"><h5 class="card-title"><?php echo $product->getDescription();?></h5></a>
+                        <p class="card-text text-muted"><?php echo $product->getProduct()->getName();?></p>
+                        <a href="#"><h5 class="card-title"><?php echo $product->getProduct()->getDescription();?></h5></a>
                         <div class="card-footer">
-                            <?php echo $product->getPrice();?>
+                            <?php echo $product->getProduct()->getPrice();?>
                         </div>
                     </div>
                 </a>
@@ -35,7 +35,8 @@
             <form action="/decrease-cart" method="POST">
                 <div class="container">
 
-                    <input type="hidden" placeholder="Введите артикул" name="productId" value="<?php echo $product->getId()?>" id="productId" required>
+                    <input type="hidden" name="productId" value="<?php echo $product->getId()?>" id="productId" required>
+                    <?=$product->getId()?>
 
 
                     <input type="number" placeholder="1" name="amount" id="amount" value="1" min="1">
@@ -45,8 +46,8 @@
                 </div>
 
             </form>
-            <a href="/create-order" method="POST">Оформить заказ</a>
         <?php endforeach; ?>
+        <a href="/create-order" method="POST">Оформить заказ</a>
     </div>
 </div>
 

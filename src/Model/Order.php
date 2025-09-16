@@ -11,8 +11,9 @@ class Order extends Model
     private string $contactPhone;
     private string $comment;
     private string $address;
-
     private int $userId;
+    private int $sum;
+    private array $orderProducts;
 
     protected function getTableName(): string{
         return 'orders';
@@ -44,13 +45,13 @@ class Order extends Model
     public function getAllByUserId(int $userId): array|null
     {
         $stmt = $this->PDO->prepare("SELECT * FROM {$this->getTableName()} WHERE user_id = :userId");
-        $stmt->execute(['user_id'=>$userId]);
+        $stmt->execute(['userId'=>$userId]);
         $result = $stmt->fetchAll();
 
 
-        if ($result === []) {
+       /* if ($result === []) {
             return null;
-        }
+        }*/
 
         $array = [];
 
@@ -70,7 +71,7 @@ class Order extends Model
 
     }
 
-    public function getOrderId(): int
+    public function getId(): int
     {
         return $this->id;
     }
@@ -95,9 +96,36 @@ class Order extends Model
         return $this->address;
     }
 
-    public function getUserId(): int{
+    public function getUserId(): int
+    {
         return $this->userId;
     }
+
+    public function getSum(): int
+    {
+        return $this->sum;
+    }
+
+    public function setSum(int $sum): void
+    {
+        $this->sum = $sum;
+    }
+
+    public function setOrderProducts(array $orderProducts): void
+    {
+        $this->orderProducts = $orderProducts;
+    }
+
+    public function getOrderProducts(): array
+    {
+        return $this->orderProducts;
+    }
+
+
+
+
+
+
 
 
 

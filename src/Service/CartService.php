@@ -2,20 +2,22 @@
 
 namespace Service;
 
-use Model\UserProducts;
 use DTO\UserProductsDTO;
-use Service\AuthService;
 use Model\Product;
+use Model\UserProducts;
+use Service\Auth\AuthInterface;
+use Service\Auth\AuthSessionService;
+
 class CartService
 {
     private UserProducts $userProducts;
-    private AuthService $authService;
+    private AuthInterface $authService;
     private Product $productsModel;
 
     public function __construct()
     {
         $this->userProducts = new UserProducts();
-        $this->authService = new AuthService();
+        $this->authService = new AuthSessionService();
         $this->productsModel = new Product();
 
     }
@@ -23,9 +25,7 @@ class CartService
     public function addProduct(UserProductsDTO $data)
     {
         $userId = $this->authService->getCurrentUser();
-        $product = $this->userProducts->checkProduct($userId->getId(), $data->getProductId());
-
-
+        $product = $this->userProducts->checkProduct($data->getProductId(), $data->getProductId());
 
         if($product){
             $amount = $product->getAmount() + $data->getAmount();
@@ -42,7 +42,7 @@ class CartService
     public function decreaseProduct(UserProductsDTO $data)
     {
         $userId = $this->authService->getCurrentUser();
-        $product = $this->userProducts->checkProduct($userId->getId(), $data->getProductId());
+        $product = $this->userProducts->checkProduct($data->getProductId(), $data->getProductId());
 
         if($product) {
             $amount = $product->getAmount() - $data->getAmount();
@@ -84,6 +84,7 @@ class CartService
             $userProduct->setProduct($product);
             $totalSum = $userProduct->getAmount() * $userProduct->getProduct()->getPrice();
             $userProduct->setTotalSum($totalSum);
+
         }
 
         return $userProducts;
@@ -94,8 +95,9 @@ class CartService
     {
         $total = 0;
         foreach ($this->getUserProducts() as $userProduct){
-            $total += $userProduct->getProduct()->getTotalSum();
+            $total += $userProduct->getTotalSum();
         }
+        print_r($total);
         return $total;
 
     }

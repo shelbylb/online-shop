@@ -3,26 +3,29 @@
 namespace Service;
 use DTO\OrderCreateDTO;
 use Model\Order;
-use Model\UserProducts;
-use Model\User;
 use Model\OrderProduct;
+use Model\Product;
+use Model\UserProducts;
+use Service\Auth\AuthInterface;
+use Service\Auth\AuthSessionService;
 
 class OrderService
 {
     private Order $orderModel;
     private UserProducts $userProducts;
 
-    private User $userModel;
     private OrderProduct $orderProductModel;
-    private AuthService $authService;
+    private AuthInterface $authService;
+
+    private Product $productModel;
 
     public function __construct()
     {
         $this->orderModel = new Order();
         $this->userProducts = new UserProducts();
-        $this->userModel = new User();
         $this->orderProductModel = new OrderProduct();
-        $this->authService = new AuthService();
+        $this->authService = new AuthSessionService();
+        $this->productModel = new Product();
 
     }
 
@@ -39,7 +42,6 @@ class OrderService
             $user->getId());
 
 
-
         $userProducts = $this->userProducts->getAllUserProductsByUserId($user->getId());
 
 
@@ -52,6 +54,35 @@ class OrderService
 
             //удаляет товары из корзины
             $this->userProducts->deleteByUserId($user->getId());
+
+    }
+
+    public function getAll():array
+    {
+        $user = $this->authService->getCurrentUser();
+
+        $orders = $this->orderModel->getAllByUserId($user->getId());
+
+        foreach ($orders as $userOrder) {
+            $orderProducts = $this->orderProductModel->getAllByOrderId($userOrder->getId());
+
+            $totalSum = 0;
+            foreach ($orderProducts as $orderProduct) {
+                $product = $this->productModel->getOneById($orderProduct->getProductId());
+                $orderProduct->setProduct($product);
+                $itemSum = $orderProduct->getAmount() * $product->getPrice();
+                $orderProduct->setSum($itemSum);
+
+                $totalSum += $itemSum;
+            }
+
+            $userOrder->setOrderProducts($orderProducts);
+            $userOrder->setSum($totalSum);
+
+        }
+
+        return $orders;
+
 
     }
 }

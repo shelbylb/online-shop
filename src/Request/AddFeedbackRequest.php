@@ -3,17 +3,17 @@
 namespace Request;
 use Model\Order;
 use Model\OrderProduct;
-use Service\AuthService;
+use Service\Auth\AuthSessionService;
 
 class AddFeedbackRequest
 {
     private Order $orderModel;
-    private AuthService $authService;
+    private AuthSessionService $authService;
     private OrderProduct $orderProductModel;
     public function __construct(private array $data)
     {
         $this->orderModel = new Order();
-        $this->authService = new AuthService();
+        $this->authService = new AuthSessionService();
         $this->orderProductModel = new OrderProduct();
 
     }

@@ -45,6 +45,7 @@
                 <div class="container">
 
                     <input type="hidden" name="productId" value="<?php echo $product->getId()?>" id="productId" required>
+                    <?=$product->getId()?>
 
 
                     <input type="number" placeholder="1" name="amount" id="amount" value="1" min="1">

@@ -8,8 +8,12 @@ class OrderProduct extends Model
     private int $orderId;
     private int $productId;
     private int $amount;
+    private int $sum;
+    private Product $product;
 
-    protected function getTableName(): string{
+
+    protected function getTableName(): string
+    {
         return 'order_products';
     }
 
@@ -34,9 +38,9 @@ class OrderProduct extends Model
         $stmt->execute(['orderId' => $orderId]);
         $oderProducts = $stmt->fetchAll();
 
-        if ($oderProducts === []) {
+       /* if ($oderProducts === []) {
             return null;
-        }
+        }*/
 
         $array = [];
 
@@ -71,6 +75,28 @@ class OrderProduct extends Model
     {
         return $this->amount;
     }
+
+    public function setSum(int $sum): void
+    {
+        $this->sum = $sum;
+    }
+
+    public function getSum(): int
+    {
+        return $this->sum;
+    }
+
+
+    public function setProduct(Product $product): void
+    {
+        $this->product = $product;
+    }
+
+    public function getProduct(): Product
+    {
+        return $this->product;
+    }
+
 
 
 

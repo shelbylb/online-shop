@@ -2,7 +2,6 @@
 
 namespace Controllers;
 
-use Model\UserProducts;
 use Request\DecreaseCartRequest;
 use Request\AddCartRequest;
 use Service\CartService;
@@ -26,16 +25,12 @@ class UserProductsController extends BaseController
 
             if (empty($errors)) {
 
-
-
                 $dto = new UserProductsDTO(
                     $request->getProductId(),
                     $request->getAmount(),
                 );
 
                 $this->cartService->addProduct($dto);
-
-
             }
 
             header("Location: /catalog");
@@ -48,9 +43,7 @@ class UserProductsController extends BaseController
     public function decreaseCart(DecreaseCartRequest $request)
     {
         if ($this->authService->check()) {
-
             $errors = $request->validate();
-
 
             if (empty($errors)) {
                 $dto = new UserProductsDTO(
@@ -59,11 +52,8 @@ class UserProductsController extends BaseController
                 );
 
                 $this->cartService->decreaseProduct($dto);
-
-
+                header("Location: /cart");
             }
-
-            header("Location: /catalog");
         } else {
             header("Location: /login");
             exit();

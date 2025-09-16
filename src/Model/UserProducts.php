@@ -5,14 +5,11 @@ namespace Model;
 class UserProducts extends Model
 {
     private int $id;
-    private string $name;
-    private string $description;
-    private int $price;
-    private string $imageUrl;
-    private int $userId;
-    private int $productId;
     private int $amount;
     private int $totalSum;
+    private int $productId;
+    private Product $product;
+    private int $userId;
 
 
     protected function getTableName(): string{
@@ -46,26 +43,6 @@ class UserProducts extends Model
 
     }
 
-    public function getById(int $userProduct): self|null
-    {
-        $stmt = $this->PDO->query('SELECT * FROM products WHERE id = '. $userProduct);
-
-        $product = $stmt->fetch();
-
-        if ($product === false) {
-            return null;
-        }
-
-        $obj = new self();
-        $obj->id = $product['id'];
-        $obj->name = $product['name'];
-        $obj->description = $product['description'];
-        $obj->price = $product['price'];
-        $obj->imageUrl = $product['image_url'];
-
-        return $obj;
-
-    }
 
     public function checkProduct(int $userId, int $productId): self | null
     {
@@ -118,34 +95,9 @@ class UserProducts extends Model
         return $this->id;
     }
 
-    public function getName(): string
+    public function setId(int $id): void
     {
-        return $this->name;
-    }
-
-    public function getDescription(): string
-    {
-        return $this->description;
-    }
-
-    public function getPrice(): int
-    {
-        return $this->price;
-    }
-
-    public function getImageUrl(): string
-    {
-        return $this->imageUrl;
-    }
-
-    public function getUserId(): int
-    {
-        return $this->userId;
-    }
-
-    public function getProductId(): int
-    {
-        return $this->productId;
+        $this->id = $id;
     }
 
     public function getAmount(): int
@@ -153,55 +105,46 @@ class UserProducts extends Model
         return $this->amount;
     }
 
-    public function setId(int $id): void
-    {
-        $this->id = $id;
-    }
-
-    public function setName(string $name): void
-    {
-        $this->name = $name;
-    }
-
-    public function setDescription(string $description): void
-    {
-        $this->description = $description;
-    }
-
-    public function setPrice(int $price): void
-    {
-        $this->price = $price;
-    }
-
-    public function setImageUrl(string $imageUrl): void
-    {
-        $this->imageUrl = $imageUrl;
-    }
-
-    public function setUserId(int $userId): void
-    {
-        $this->userId = $userId;
-    }
-
-    public function setProductId(int $productId): void
-    {
-        $this->productId = $productId;
-    }
-
     public function setAmount(int $amount): void
     {
         $this->amount = $amount;
-    }
-
-    public function setTotalSum(int $totalSum): void
-    {
-        $this->totalSum = $totalSum;
     }
 
     public function getTotalSum(): int
     {
         return $this->totalSum;
     }
+
+    public function setTotalSum(int $totalSum): void
+    {
+        $this->totalSum = $totalSum;
+        //print_r($totalSum);
+    }
+
+    public function getProduct(): Product
+    {
+        return $this->product;
+    }
+
+    public function setProduct(Product $product): void
+    {
+        $this->product = $product;
+    }
+
+    public function getProductId(): int
+    {
+        return $this->productId;
+    }
+
+    public function getUserId(): int
+    {
+        return $this->userId;
+    }
+
+
+
+
+
 
 
 

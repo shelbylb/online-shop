@@ -28,12 +28,13 @@
 <body>
 <h1>Мои заказы</h1>
 
-<?php foreach ($newUserOrders as $newUserOrder): ?>
-    <h2>Заказ №<?php echo $newUserOrder->getId() ?></h2>
-    <p>Контактное имя:<?php echo $newUserOrder->getName()?></p>
-    <p>Контактный номер телефона:<?php echo $newUserOrder->getPhoneNumber()?></p>
-    <p>Адрес: <?php echo $newUserOrder->getAddress()?> </p>
-    <p>Комментарий:<?php echo $newUserOrder->getComment()?></p>
+<?php foreach ($userOrders as $order): ?>
+    <h2>Заказ №<?php echo $order->getId() ?></h2>
+    <p>Контактное имя:<?php echo $order->getContactName()?></p>
+    <p>Контактный номер телефона:<?php echo $order->getContactPhone()?></p>
+    <p>Адрес: <?php echo $order->getAddress()?> </p>
+    <p>Комментарий:<?php echo $order->getComment()?></p>
+
 
     <table>
         <thead>
@@ -46,20 +47,21 @@
         </tr>
         </thead>
         <tbody>
-        <?php foreach ($newUserOrder->getProducts() as $newOrderProduct): ?>
+        <?php foreach ($order as $product): ?>
             <tr>
-                <td><?php echo $newOrderProduct->getName() ?></td>
-                <td><img class="card-img-top" src="<?php echo $newOrderProduct->getImageUrl();?>" alt="Card image" height="160" width="160"></td>
-                <td><?php echo $newOrderProduct->getPrice() ?></td>
-                <td><?php echo $newOrderProduct->getAmount() ?></td>
-                <td><?php echo $newOrderProduct->getTotalSum() ?></td>
+                <td><?php echo $product->getName() ?></td>
+                <td><img class="card-img-top" src="<?php echo $product->getImageUrl();?>" alt="Card image" height="160" width="160"></td>
+                <td><?php echo $product->getPrice() ?></td>
+                <td><?php echo $product->getAmount() ?></td>
+                <td><?php echo $product->getSum() ?></td>
             </tr>
         <?php endforeach; ?>
+
         </tbody>
         <tfoot>
         <tr>
             <td colspan="3" style="text-align: right;"><strong>Итого:</strong></td>
-            <td><?php echo $newUserOrder->getTotal()?> руб.</td>
+            <td><?php echo $order->getTotal()?> руб.</td>
         </tr>
         </tfoot>
     </table>
