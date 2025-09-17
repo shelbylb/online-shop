@@ -60,14 +60,14 @@ class User extends Model
 
     public function updateName( string $name)
     {
-        $smt = $pdo->prepare("UPDATE {$this->getTableName()} SET name = :name WHERE id = " . $_SESSION['userId']);
+        $smt = $this->PDO->prepare("UPDATE {$this->getTableName()} SET name = :name WHERE id = " . $_SESSION['userId']);
         $smt->execute(['name' => $name]);
 
     }
 
     public function updateEmail(string $email)
     {
-        $smt = $pdo->prepare("UPDATE {$this->getTableName()} SET email = :email WHERE id = " . $_SESSION['userId']);
+        $smt = $this->PDO->prepare("UPDATE {$this->getTableName()} SET email = :email WHERE id = " . $_SESSION['userId']);
         $smt->execute(['email' => $email]);
     }
 
