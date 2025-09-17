@@ -1,7 +1,6 @@
 <?php
 
 namespace DTO;
-//use Model\User;
 
 class AuthDTO
 {
@@ -9,7 +8,7 @@ class AuthDTO
     public function __construct(
         private string $email,
         private string $password,
-        /*private User   $userId*/)
+        private string $name)
     {
 
     }
@@ -23,6 +22,12 @@ class AuthDTO
     {
         return $this->password;
     }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
 
 
 
