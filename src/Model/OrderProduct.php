@@ -38,9 +38,10 @@ class OrderProduct extends Model
         $stmt->execute(['orderId' => $orderId]);
         $oderProducts = $stmt->fetchAll();
 
-       /* if ($oderProducts === []) {
+        if ($oderProducts === [])
+        {
             return null;
-        }*/
+        }
 
         $array = [];
 

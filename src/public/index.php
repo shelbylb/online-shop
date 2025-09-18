@@ -32,6 +32,6 @@ $app->get('/logout', UserController::class, 'logout');
 $app->get('/create-order', OrderController::class, 'getCheckOut');
 $app->post('/create-order', OrderController::class, 'handleCheckOut', \Request\HandleCheckOutRequest::class);
 $app->get('/orders', OrderController::class, 'getPageOrders');
-$app->get('/feedback', FeedbackController::class, 'getFeedback');
 $app->post('/feedback', FeedbackController::class, 'getFeedback', \Request\GetFeedbackRequest::class);
+$app->post('/add-feedback', FeedbackController::class, 'addFeedback', \Request\AddFeedbackRequest::class);
 $app->run();

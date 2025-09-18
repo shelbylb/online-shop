@@ -10,20 +10,39 @@
 <div class="product-card">
     <!-- Блок с изображением товара -->
     <div class="product-image">
-        <img src="<?php echo $orderProduct->getImageUrl()?>" alt="Изображение товара">
+        <img src="<?php echo $product->getImageUrl()?>" alt="Изображение товара">
     </div>
 
     <!-- Блок с информацией о товаре -->
     <div class="product-info">
-        <h2 class="product-title"><?php echo $orderProduct->getName();?></h2>
-        <div class="product-price"><?php echo $orderProduct->getPrice();?></div>
-        <p class="product-description"><?php echo $orderProduct->getDescription();?></p>
+        <h2 class="product-title"><?php echo $product->getName();?></h2>
+        <div class="product-price"><?php echo $product->getPrice();?></div>
+        <p class="product-description"><?php echo $product->getDescription();?></p>
+    </div>
+
+    <!-- Блок существующих отзывов -->
+    <div class="reviews-block">
+        <h3>Отзывы (<?php echo count($reviews); ?>)</h3>
+        <?php if (count($reviews) > 0): ?>
+            <?php foreach ($reviews as $review): ?>
+                <div class="review-item">
+                    <div class="review-rating">
+                        <?php for ($i = 1; $i <= 5; $i++): ?>
+                            <span class="star <?php if ($i <= $review->getRating()): ?>active<?php endif; ?>">★</span>
+                        <?php endfor; ?>
+                    </div>
+                    <p class="review-text"><?php echo $review->getText(); ?></p>
+                </div>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p>Отзывов пока нет</p>
+        <?php endif; ?>
     </div>
 
     <!-- Форма для отзыва -->
     <div class="review-form">
         <h3>Оставить отзыв</h3>
-        <form action="#" method="post">  <!--добавить ссылку-->
+        <form action="/add-feedback" method="post">
             <!-- Блок рейтинга -->
             <div class="rating-container">
                 <input type="radio" id="star1" name="rating" value="1">
@@ -39,91 +58,46 @@
             </div>
 
             <!-- Поле для текста отзыва -->
+            <input type="hidden" name="productId" value="<?php echo $product->getId()?>" id="productId" required>
             <textarea name="comment" placeholder="Напишите ваш отзыв..." required></textarea>
             <button type="submit">Отправить</button>
         </form>
     </div>
 </div>
-</body>
-</html>
-
-
 
 <style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 20px;
-        color: #333;
-    }
+    /* Существующие стили */
 
-    .product-card {
-        max-width: 600px;
-        margin: 0 auto;
-        padding: 20px;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-    }
-
-    .product-image {
-        text-align: center;
-        margin-bottom: 20px;
-    }
-
-    .product-image img {
-        max-width: 100%;
-        height: auto;
-        border-radius: 8px;
-    }
-
-    .product-info {
-        margin-bottom: 30px;
-    }
-
-    .product-title {
-        font-size: 24px;
-        margin: 0 0 10px;
-    }
-
-    .product-price {
-        font-size: 22px;
-        color: #ff6347;
-        margin-bottom: 10px;
-    }
-
-    .review-form {
+    .reviews-block {
         padding: 20px;
         background: #f9f9f9;
         border-radius: 8px;
-    }
-
-    .rating-container {
-        display: flex;
-        justify-content: center;
         margin-bottom: 20px;
     }
 
-    .rating-container input {
-        display: none;
+    .review-item {
+        padding: 15px;
+        border-bottom: 1px solid #ddd;
     }
 
-    .rating-container label {
-        font-size: 24px;
+    .review-rating {
+        margin-bottom: 10px;
+    }
+
+    .star {
+        font-size: 18px;
         color: #ccc;
         cursor: pointer;
-        margin-right: 5px;
     }
 
-    .rating-container label:hover,
-    .rating-container label:hover ~ label {
+    .star.active {
         color: orange;
     }
 
-    .rating-container input:checked ~ label {
-        color: orange;
+    .review-text {
+        font-size: 16px;
+        color: #333;
     }
-
-    textarea {
-        width: 100%;
-        height: 150px
 </style>
+</body>
+</html>

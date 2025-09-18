@@ -46,7 +46,7 @@ class App
 
         } else {
             http_response_code(404);
-            require_once '../Views/'; //подключить страницу 404
+            require_once '../Views/404.php'; //подключить страницу 404
         }
 
 

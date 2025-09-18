@@ -38,7 +38,8 @@ class FeedbackController extends BaseController
 
         $errors = $request->validate();
 
-        if (empty($errors)) {
+        if (empty($errors))
+        {
 
             $user = $this->authService->getCurrentUser();
 
@@ -49,11 +50,8 @@ class FeedbackController extends BaseController
                 $request->getComment(),
                 $request->getScore()
             );
-
-
-
-
         }
+        require_once '../Views/feedback.php';
     }
 
 
@@ -62,7 +60,6 @@ class FeedbackController extends BaseController
 
     public function getFeedback(GetFeedbackRequest $request){
         $productId = $request->getProductId();
-
         $feedbacks = $this->feedback->getAllFeedbackByProductId($productId);
         $product = $this -> productModel -> getOneById($productId);
         require_once '../Views/feedback.php';

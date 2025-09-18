@@ -46,18 +46,25 @@ class AddFeedbackRequest
 
         $user = $this->authService->getCurrentUser();
         $orders = $this->orderModel->getAllByUserId($user->getId());
-        $productId = $_SESSION['productId'];
+
+        $productId = $this->data['productId'];
+        //print_r($orders);
 
         $flag = false;
         foreach ($orders as $order) {
 
-            $orderId = $order->getOrderId();
-            $productFromOrder = $this->orderProductModel->getAllByOrderId($orderId);
-            $productIdByOrder = $productFromOrder->getProductId();
+            $orderId = $order->getId();
+            $productsByOrderId = $this->orderProductModel->getAllByOrderId($orderId);
+            /*echo '<pre>';
+            print_r($productsByOrderId);*/
+            //нужен форич для $productsByOrderId
+            foreach ($productsByOrderId as $productOrder) {
+                $productIdByOrder = $productOrder->getProductId();
 
-            if($productIdByOrder == $productId) {
-                $flag = true;
-                break;
+                if ($productIdByOrder == $productId) {
+                    $flag = true;
+                    break;
+                }
             }
 
         }
