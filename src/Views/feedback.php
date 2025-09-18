@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html lang="ru">
+<a href="/profile">Мой профиль</a>
+<a href="/catalog">Каталог</a>
+<a href="/orders">Мои заказы</a>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,9 +25,9 @@
 
     <!-- Блок существующих отзывов -->
     <div class="reviews-block">
-        <h3>Отзывы (<?php echo count($reviews); ?>)</h3>
-        <?php if (count($reviews) > 0): ?>
-            <?php foreach ($reviews as $review): ?>
+        <h3>Отзывы (<?php echo count($feedbacks); ?>)</h3>
+        <?php if (count($feedbacks) > 0): ?>
+            <?php foreach ($feedbacks as $review): ?>
                 <div class="review-item">
                     <div class="review-rating">
                         <?php for ($i = 1; $i <= 5; $i++): ?>
