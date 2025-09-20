@@ -65,8 +65,6 @@ class Feedback extends Model
         VALUES (:userId, :productId, :score, :comment)");
 
         $stmt->execute(['userId' => $_SESSION['userId'], 'productId' => $productId, 'score' => $score, 'comment' => $comment]);
-
-
     }
 
     public function getScore(): int
@@ -76,7 +74,6 @@ class Feedback extends Model
 
     public function getComment(): string
     {
-        
         return $this->comment;
     }
 
