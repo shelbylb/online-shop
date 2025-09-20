@@ -49,13 +49,12 @@ class AddFeedbackRequest
 
         $productId = $this->data['productId'];
 
-
         $flag = false;
         foreach ($orders as $order) {
 
             $orderId = $order->getId();
             $productsByOrderId = $this->orderProductModel->getAllByOrderId($orderId);
-         
+
             foreach ($productsByOrderId as $productOrder) {
                 $productIdByOrder = $productOrder->getProductId();
 
@@ -70,7 +69,6 @@ class AddFeedbackRequest
         if ($flag === false) {
             $errors['productId'] = "Товара нет в Ваших заказах";
         }
-
 
         return $errors;
     }
