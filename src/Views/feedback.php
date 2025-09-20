@@ -70,7 +70,7 @@
 
 <style>
     /* Существующие стили */
-    
+
     .reviews-block {
         padding: 20px;
         background: #f9f9f9;
