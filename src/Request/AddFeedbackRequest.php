@@ -23,12 +23,12 @@ class AddFeedbackRequest
         return $this->data["productId"];
     }
 
-    public function getScore(): int
+    public function getScore(): string
     {
         return $this->data["score"];
     }
 
-    public function getComment(): int
+    public function getComment(): string
     {
         return $this->data["comment"];
     }
@@ -40,7 +40,7 @@ class AddFeedbackRequest
 
         if (!isset($this->data['score'])) {
 
-            $errors['score'] = "Поставьте Вашу оценку";
+            $errors['rating'] = "Поставьте Вашу оценку";
 
         }
 
@@ -48,16 +48,14 @@ class AddFeedbackRequest
         $orders = $this->orderModel->getAllByUserId($user->getId());
 
         $productId = $this->data['productId'];
-        //print_r($orders);
+
 
         $flag = false;
         foreach ($orders as $order) {
 
             $orderId = $order->getId();
             $productsByOrderId = $this->orderProductModel->getAllByOrderId($orderId);
-            /*echo '<pre>';
-            print_r($productsByOrderId);*/
-            //нужен форич для $productsByOrderId
+         
             foreach ($productsByOrderId as $productOrder) {
                 $productIdByOrder = $productOrder->getProductId();
 
