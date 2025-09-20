@@ -41,7 +41,7 @@ class App
 
 
             } else {
-                echo "$routesMethod не поддерживается для $requestUri";
+                print_r( "$requestMethod не поддерживается для $requestUri");
             }
 
         } else {
