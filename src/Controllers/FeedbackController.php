@@ -50,8 +50,11 @@ class FeedbackController extends BaseController
                 $request->getComment(),
                 $request->getScore()
             );
+            header("Location: /catalog");
+        } else {
+            print_r($errors);
         }
-        require_once '../Views/feedback.php';
+
     }
 
 
