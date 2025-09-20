@@ -50,15 +50,13 @@ class Feedback extends Model
 
             $feedbackObj->comment = $feedback['comment'];
 
-            $feedbackObj->date = $feedback['date'];
-
             $array[] = $feedbackObj;
         }
 
         return $array;
     }
 
-    public function addFeedback(int $userId, int $productId, int $score, string $comment)
+    public function addFeedback(int $userId, int $productId, string $comment, int $score)
 
     {
 
@@ -70,5 +68,18 @@ class Feedback extends Model
 
 
     }
+
+    public function getScore(): int
+    {
+        return $this->score;
+    }
+
+    public function getComment(): string
+    {
+        
+        return $this->comment;
+    }
+
+
 
 }
