@@ -18,6 +18,7 @@ class OrderService
     private AuthInterface $authService;
 
     private Product $productModel;
+    private CartService $cartService;
 
     public function __construct()
     {
@@ -26,6 +27,7 @@ class OrderService
         $this->orderProductModel = new OrderProduct();
         $this->authService = new AuthSessionService();
         $this->productModel = new Product();
+        $this->cartService = new CartService();
 
     }
 
@@ -43,6 +45,12 @@ class OrderService
 
 
         $userProducts = $this->userProducts->getAllUserProductsByUserId($user->getId());
+
+        $sum = $this->cartService->getSum();
+
+        if ($sum < 1000){
+            throw new \Exception('Для оформления заказа сумма заказа должна быть больше 1000 рублей');
+        }
 
 
         foreach ($userProducts as $userProduct) {
