@@ -61,7 +61,6 @@
             </div>
 
             <!-- Поле для текста отзыва -->
-            
             <input type="hidden" name="productId" value="<?php echo $product->getId()?>" id="productId" required>
             <textarea name="comment" placeholder="Напишите ваш отзыв..." required></textarea>
             <button type="submit">Отправить</button>
@@ -71,8 +70,7 @@
 
 <style>
     /* Существующие стили */
-
-
+    
     .reviews-block {
         padding: 20px;
         background: #f9f9f9;
