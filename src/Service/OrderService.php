@@ -8,6 +8,7 @@ use Model\Product;
 use Model\UserProducts;
 use Service\Auth\AuthInterface;
 use Service\Auth\AuthSessionService;
+use Service\Log;
 
 class OrderService
 {
@@ -19,6 +20,7 @@ class OrderService
 
     private Product $productModel;
     private CartService $cartService;
+    private Log $log;
 
     public function __construct()
     {
@@ -28,33 +30,37 @@ class OrderService
         $this->authService = new AuthSessionService();
         $this->productModel = new Product();
         $this->cartService = new CartService();
+        $this->log = new Log();
 
     }
+
 
     public function createOrder(OrderCreateDTO $data)
 
     {
-        $user = $this->authService->getCurrentUser();
+        try {
 
-        $orderId = $this->orderModel->create(
-            $data->getContactName(),
-            $data->getContactPhone(),
-            $data->getComment(),
-            $data->getAddress(),
-            $user->getId());
+            $user = $this->authService->getCurrentUser();
 
-
-        $userProducts = $this->userProducts->getAllUserProductsByUserId($user->getId());
-
-        $sum = $this->cartService->getSum();
-
-        if ($sum < 1000){
-            throw new \Exception('Для оформления заказа сумма заказа должна быть больше 1000 рублей');
-        }
+            $orderId = $this->orderModel->create(
+                $data->getContactName(),
+                $data->getContactPhone(),
+                $data->getComment(),
+                $data->getAddress(),
+                $user->getId());
 
 
-        foreach ($userProducts as $userProduct) {
-                $productId = $userProduct->getProductId();  // нет перехода
+            $userProducts = $this->userProducts->getAllUserProductsByUserId($user->getId());
+
+            $sum = $this->cartService->getSum();
+
+            if ($sum < 1000) {
+                throw new \Exception('Для оформления заказа сумма заказа должна быть больше 1000 рублей');
+            }
+
+
+            foreach ($userProducts as $userProduct) {
+                $productId = $userProduct->getProductId();
                 $amount = $userProduct->getAmount();
 
                 $this->orderProductModel->create($orderId, $productId, $amount);
@@ -62,6 +68,14 @@ class OrderService
 
             //удаляет товары из корзины
             $this->userProducts->deleteByUserId($user->getId());
+
+        } catch (\Throwable $exception){
+
+            $data = 'ошибка при создании заказа';
+
+            $this->log->log($exception, $data);
+
+        }
 
     }
 
