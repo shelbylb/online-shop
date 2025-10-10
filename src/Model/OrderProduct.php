@@ -32,7 +32,7 @@ class OrderProduct extends Model
      * @param int $orderId
      * @return OrderProduct[]|null
      */
-    public function getAllByOrderId(int $orderId): array|null
+    public function getAllByOrderId(int $orderId): array
     {
         $stmt = $this->PDO->prepare("SELECT * FROM {$this->getTableName()} WHERE order_id = :orderId");
         $stmt->execute(['orderId' => $orderId]);
@@ -40,7 +40,7 @@ class OrderProduct extends Model
 
         if ($oderProducts === [])
         {
-            return null;
+            return [];
         }
 
         $array = [];

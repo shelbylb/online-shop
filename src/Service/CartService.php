@@ -97,9 +97,7 @@ class CartService
         foreach ($this->getUserProducts() as $userProduct){
             $total += $userProduct->getTotalSum();
         }
-        print_r($total);
         return $total;
-
     }
 
 }

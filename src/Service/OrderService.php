@@ -8,7 +8,7 @@ use Model\Product;
 use Model\UserProducts;
 use Service\Auth\AuthInterface;
 use Service\Auth\AuthSessionService;
-use Service\Log;
+use Service\Log\LogDBService;
 
 class OrderService
 {
@@ -20,7 +20,7 @@ class OrderService
 
     private Product $productModel;
     private CartService $cartService;
-    private Log $log;
+    private LogDBService $log;
 
     public function __construct()
     {
@@ -30,25 +30,20 @@ class OrderService
         $this->authService = new AuthSessionService();
         $this->productModel = new Product();
         $this->cartService = new CartService();
-        $this->log = new Log();
+        $this->log = new Log\LogDBService();
 
     }
 
 
+    /**
+     * @throws \Throwable
+     */
     public function createOrder(OrderCreateDTO $data)
 
     {
         try {
 
             $user = $this->authService->getCurrentUser();
-
-            $orderId = $this->orderModel->create(
-                $data->getContactName(),
-                $data->getContactPhone(),
-                $data->getComment(),
-                $data->getAddress(),
-                $user->getId());
-
 
             $userProducts = $this->userProducts->getAllUserProductsByUserId($user->getId());
 
@@ -58,6 +53,12 @@ class OrderService
                 throw new \Exception('Для оформления заказа сумма заказа должна быть больше 1000 рублей');
             }
 
+            $orderId = $this->orderModel->create(
+                $data->getContactName(),
+                $data->getContactPhone(),
+                $data->getComment(),
+                $data->getAddress(),
+                $user->getId());
 
             foreach ($userProducts as $userProduct) {
                 $productId = $userProduct->getProductId();
@@ -71,9 +72,11 @@ class OrderService
 
         } catch (\Throwable $exception){
 
-            $data = 'ошибка при создании заказа';
+            $data = 'ошибка при создании заказа ';
 
             $this->log->log($exception, $data);
+
+            throw $exception;
 
         }
 

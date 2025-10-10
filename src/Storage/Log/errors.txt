@@ -20,3 +20,48 @@
 Сообщение: Для оформления заказа сумма заказа должна быть больше 1000 рублей
 Файл: /var/www/html/src/Service/OrderService.php
 Строка: 52
+
+Время: 07.10.25 14:23
+Сообщение: Too few arguments to function DTO\AuthDTO::__construct(), 2 passed in /var/www/html/src/Controllers/UserController.php on line 81 and exactly 3 expected
+Файл: /var/www/html/src/DTO/AuthDTO.php
+Строка: 8
+
+Время: 07.10.25 14:31
+Сообщение: Request\LoginRequest::__construct(): Argument #1 ($data) must be of type array, string given, called in /var/www/html/src/Controllers/UserController.php on line 81
+Файл: /var/www/html/src/Request/LoginRequest.php
+Строка: 10
+
+Время: 07.10.25 14:34
+Сообщение: Service\Auth\AuthSessionService::auth(): Argument #1 ($data) must be of type DTO\AuthDTO, string given, called in /var/www/html/src/Controllers/UserController.php on line 83
+Файл: /var/www/html/src/Service/Auth/AuthSessionService.php
+Строка: 38
+
+Время: 07.10.25 15:03
+Сообщение: Too few arguments to function DTO\AuthDTO::__construct(), 2 passed in /var/www/html/src/Controllers/UserController.php on line 81 and exactly 3 expected
+Файл: /var/www/html/src/DTO/AuthDTO.php
+Строка: 8
+
+Время: 07.10.25 15:03
+Сообщение: Too few arguments to function DTO\AuthDTO::__construct(), 2 passed in /var/www/html/src/Controllers/UserController.php on line 81 and exactly 3 expected
+Файл: /var/www/html/src/DTO/AuthDTO.php
+Строка: 8
+
+Время: 07.10.25 15:03
+Сообщение: Too few arguments to function DTO\AuthDTO::__construct(), 2 passed in /var/www/html/src/Controllers/UserController.php on line 81 and exactly 3 expected
+Файл: /var/www/html/src/DTO/AuthDTO.php
+Строка: 8
+
+Время: 07.10.25 15:05
+Сообщение: Too few arguments to function DTO\AuthDTO::__construct(), 2 passed in /var/www/html/src/Controllers/UserController.php on line 81 and exactly 3 expected
+Файл: /var/www/html/src/DTO/AuthDTO.php
+Строка: 8
+
+Время: 07.10.25 15:11
+Сообщение: Too few arguments to function DTO\AuthDTO::__construct(), 2 passed in /var/www/html/src/Controllers/UserController.php on line 81 and exactly 3 expected
+Файл: /var/www/html/src/DTO/AuthDTO.php
+Строка: 8
+
+Время: 07.10.25 16:14
+Сообщение: Too few arguments to function DTO\AuthDTO::__construct(), 2 passed in /var/www/html/src/Controllers/UserController.php on line 81 and exactly 3 expected
+Файл: /var/www/html/src/DTO/AuthDTO.php
+Строка: 8

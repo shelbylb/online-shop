@@ -7,8 +7,7 @@ class AuthDTO
 
     public function __construct(
         private string $email,
-        private string $password,
-        private string $name)
+        private string $password)
     {
 
     }
@@ -23,10 +22,7 @@ class AuthDTO
         return $this->password;
     }
 
-    public function getName(): string
-    {
-        return $this->name;
-    }
+
 
 
 
