@@ -26,6 +26,7 @@ class CartController
 
         if(empty($errors)){
 
+<<<<<<< Updated upstream
             $userId = $_SESSION['userId'];
             $productId = $_POST['productId'];
             $amount = $_POST['amount'];
@@ -40,6 +41,11 @@ class CartController
             } else {
                 $amount = $data->getAmount() + $amount;
                 $this->cartModel->update($userId, $productId, $amount);
+=======
+                $amount = $this->cartService->addProduct($dto);
+
+                echo json_encode($amount);
+>>>>>>> Stashed changes
             }
 
             header("Location: /catalog");
@@ -53,8 +59,14 @@ class CartController
         if(isset($data['amount'])){
             $amount = (int)$data['amount'];
 
+<<<<<<< Updated upstream
             if($amount < 0 && $amount > 100){
                 $errors['amount'] = 'Введите колличество товара от 1 до 100';
+=======
+                 $amount = $this->cartService->decreaseProduct($dto);
+                echo $amount;
+                //header("Location: /cart");
+>>>>>>> Stashed changes
             }
         }
 
@@ -94,6 +106,20 @@ class CartController
 
 
         require_once '../Views/cart.php';
+    }
+
+    public function updateQuantity(UpdateCartRequest $request)
+    {
+        header('Content-Type: application/json');
+
+        $productId = $request->getProductId();
+        $amount = $request->getAmount();
+
+        // Вызываем метод сервиса
+        $result = $this->cartService->updateQuantity($productId, $amount);
+
+        echo json_encode($result);
+        exit;
     }
 
 }
