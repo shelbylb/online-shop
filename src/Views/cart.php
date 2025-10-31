@@ -19,35 +19,37 @@
                     </div>
                 </a>
             </div>
-            <form action="/add-cart" method="POST">
-                <div class="container">
 
-                    <input type="hidden" placeholder="Введите артикул" name="productId" value="<?php echo $product->getProductId()?>" id="productId" required>
+            <div class="quantity-container">
 
+                    <form action="/decrease-cart" method="POST" style="display: inline-flex;">
+                        <input type="hidden" name="productId" value="<?php echo $product->getProductId()?>" id="productId" required>
+                        <input type="hidden" placeholder="1" name="amount" id="amount" value="1" min="1">
+                        <button type="submit" class="registerbtn btn-minus">-</button>
+                    </form>
 
-                    <input type="number" placeholder="1" name="amount" id="amount" value="1" min="1">
+                    <input
+                            type="number"
+                            class="quantity-input"
+                            placeholder="<?php echo $product->getAmount(); ?>"
+                            value="<?php echo $product->getAmount(); ?>"
+                            min="1"
+                            readonly
+                            style="width: 40px; text-align: center;"
+                    >
 
+                    <form action="/add-cart" method="POST" style="display: inline-flex;">
+                        <input type="hidden" name="productId" value="<?php echo $product->getProductId()?>" id="productId" required>
+                        <input type="hidden" placeholder="1" name="amount" id="amount" value="1" min="1">
+                        <button type="submit" class="registerbtn btn-plus">+</button>
+                    </form>
+            </div>
 
-                    <button type="submit" class="registerbtn">+</button>
-                </div>
-
-            </form>
-            <form action="/decrease-cart" method="POST">
-                <div class="container">
-
-                    <input type="hidden" name="productId" value="<?php echo $product->getProductId()?>" id="productId" required>
-                    <?=$product->getAmount()?>
-
-
-                    <input type="number" placeholder="1" name="amount" id="amount" value="1" min="1">
-
-
-                    <button type="submit" class="registerbtn">-</button>
-                </div>
-
-            </form>
         <?php endforeach; ?>
-        <a href="/create-order" method="POST">Оформить заказ</a>
+
+        <form action="/create-order" method="POST">
+            <button type="submit" class="registerbtn btn-add">Оформить заказ</button>
+        </form>
     </div>
 </div>
 
@@ -97,5 +99,14 @@
         font-weight: bold;
         font-size: 18px;
         background-color: white;
+    }
+
+    .btn-add {
+        padding: 5px 15px;
+        font-size: 16px;
+        background-color: #4CAF50; /* Зелёный цвет */
+        color: white;
+        border: none;
+        border-radius: 4px;
     }
 </style>
