@@ -30,7 +30,7 @@ class CartService
 
         }
 
-        echo json_encode($amount);
+
 
     }
 
