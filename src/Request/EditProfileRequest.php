@@ -5,13 +5,14 @@ use Model\User;
 
 class EditProfileRequest
 {
-    private User $userModel;
 
-    public function __construct(private array $data)
+
+    public function __construct(private array $data) // сокращенное обозначение свойства
     {
-        $this->userModel = new User();
 
     }
+
+
 
     public function getName(): string
     {
@@ -44,7 +45,7 @@ class EditProfileRequest
             } elseif (!empty($email) && filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
                 $error['email'] = 'Email некорректный';
             } else {
-                $user = $this->userModel->getByEmail($email);
+                $user = User::getByEmail($email);
 
                 $userId = $_SESSION['userId'];
 

@@ -65,3 +65,556 @@
 Сообщение: Too few arguments to function DTO\AuthDTO::__construct(), 2 passed in /var/www/html/src/Controllers/UserController.php on line 81 and exactly 3 expected
 Файл: /var/www/html/src/DTO/AuthDTO.php
 Строка: 8
+
+Время: 26.10.25 20:21
+Cannot assign null to property Model\Product::$id of type int
+Файл: /var/www/html/src/Model/Product.php
+Строка: 60
+
+Время: 26.10.25 20:25
+Cannot assign null to property Model\Product::$name of type string
+Файл: /var/www/html/src/Model/Product.php
+Строка: 61
+
+Время: 27.10.25 16:41
+SQLSTATE[HY093]: Invalid parameter number: :userId
+Файл: /var/www/html/src/Model/Order.php
+Строка: 57
+
+Время: 27.10.25 16:44
+SQLSTATE[08P01]: <<Unknown error>>: 7 ERROR:  bind message supplies 0 parameters, but prepared statement "pdo_stmt_00000001" requires 1
+Файл: /var/www/html/src/Model/Order.php
+Строка: 51
+
+Время: 27.10.25 16:45
+Cannot assign null to property Model\OrderProduct::$orderId of type int
+Файл: /var/www/html/src/Model/OrderProduct.php
+Строка: 72
+
+Время: 27.10.25 16:48
+Cannot assign null to property Model\OrderProduct::$productId of type int
+Файл: /var/www/html/src/Model/OrderProduct.php
+Строка: 73
+
+Время: 27.10.25 16:48
+Model\Order::setOrderProducts(): Argument #1 ($orderProducts) must be of type array, Model\OrderProduct given, called in /var/www/html/src/Model/Order.php on line 107
+Файл: /var/www/html/src/Model/Order.php
+Строка: 153
+
+Время: 27.10.25 16:52
+Model\Order::setOrderProducts(): Argument #1 ($orderProducts) must be of type array, Model\OrderProduct given, called in /var/www/html/src/Model/Order.php on line 107
+Файл: /var/www/html/src/Model/Order.php
+Строка: 153
+
+Время: 27.10.25 16:57
+Call to undefined method Model\Order::getProductId()
+Файл: /var/www/html/src/Service/OrderService.php
+Строка: 112
+
+Время: 27.10.25 16:59
+Call to undefined method Model\Order::getProductId()
+Файл: /var/www/html/src/Service/OrderService.php
+Строка: 112
+
+Время: 27.10.25 17:02
+Call to undefined method Model\Order::setProduct()
+Файл: /var/www/html/src/Service/OrderService.php
+Строка: 113
+
+Время: 27.10.25 17:03
+Call to undefined method Model\Order::getAmount()
+Файл: /var/www/html/src/Service/OrderService.php
+Строка: 113
+
+Время: 27.10.25 17:04
+Call to undefined method Model\Order::getPrice()
+Файл: /var/www/html/src/Service/OrderService.php
+Строка: 113
+
+Время: 27.10.25 17:15
+Call to undefined method Model\Order::getName()
+Файл: /var/www/html/src/Views/orders.php
+Строка: 52
+
+Время: 27.10.25 17:16
+Call to undefined method Model\Order::getName()
+Файл: /var/www/html/src/Views/orders.php
+Строка: 52
+
+Время: 27.10.25 17:21
+syntax error, unexpected token "endforeach", expecting end of file
+Файл: /var/www/html/src/Views/orders.php
+Строка: 68
+
+Время: 27.10.25 17:57
+syntax error, unexpected token "->", expecting identifier or variable or "{" or "$"
+Файл: /var/www/html/src/Views/orders.php
+Строка: 54
+
+Время: 28.10.25 09:57
+Call to a member function getOneById() on null
+Файл: /var/www/html/src/Views/orders.php
+Строка: 57
+
+Время: 28.10.25 09:58
+Call to undefined method Model\Order::getName()
+Файл: /var/www/html/src/Views/orders.php
+Строка: 56
+
+Время: 28.10.25 09:59
+Call to undefined method Model\Order::getAmount()
+Файл: /var/www/html/src/Views/orders.php
+Строка: 59
+
+Время: 28.10.25 10:02
+Call to a member function getSum() on null
+Файл: /var/www/html/src/Views/orders.php
+Строка: 69
+
+Время: 28.10.25 10:04
+Call to a member function getSum() on null
+Файл: /var/www/html/src/Views/orders.php
+Строка: 69
+
+Время: 28.10.25 10:05
+Call to a member function getSum() on null
+Файл: /var/www/html/src/Views/orders.php
+Строка: 69
+
+Время: 28.10.25 10:08
+syntax error, unexpected token "endforeach", expecting end of file
+Файл: /var/www/html/src/Views/orders.php
+Строка: 72
+
+Время: 28.10.25 10:08
+syntax error, unexpected token "endforeach", expecting end of file
+Файл: /var/www/html/src/Views/orders.php
+Строка: 72
+
+Время: 28.10.25 10:09
+Call to a member function getSum() on array
+Файл: /var/www/html/src/Views/orders.php
+Строка: 68
+
+Время: 28.10.25 14:39
+Cannot assign null to property Model\OrderProduct::$id of type int
+Файл: /var/www/html/src/Model/OrderProduct.php
+Строка: 71
+
+Время: 28.10.25 14:42
+Cannot assign null to property Model\OrderProduct::$id of type int
+Файл: /var/www/html/src/Model/OrderProduct.php
+Строка: 71
+
+Время: 28.10.25 14:42
+Cannot assign null to property Model\OrderProduct::$id of type int
+Файл: /var/www/html/src/Model/OrderProduct.php
+Строка: 71
+
+Время: 28.10.25 14:44
+Cannot assign null to property Model\Order::$id of type int
+Файл: /var/www/html/src/Model/Order.php
+Строка: 89
+
+Время: 28.10.25 14:45
+Cannot assign null to property Model\OrderProduct::$id of type int
+Файл: /var/www/html/src/Model/OrderProduct.php
+Строка: 71
+
+Время: 28.10.25 15:09
+Cannot assign null to property Model\OrderProduct::$id of type int
+Файл: /var/www/html/src/Model/OrderProduct.php
+Строка: 71
+
+Время: 28.10.25 15:11
+SQLSTATE[42703]: Undefined column: 7 ERROR:  column o.o_id does not exist
+LINE 3:             INNER JOIN order_products op ON o.o_id = op.orde...
+                                                    ^
+HINT:  Perhaps you meant to reference the column "o.id".
+Файл: /var/www/html/src/Model/Order.php
+Строка: 57
+
+Время: 28.10.25 15:25
+Cannot assign null to property Model\OrderProduct::$id of type int
+Файл: /var/www/html/src/Model/OrderProduct.php
+Строка: 71
+
+Время: 28.10.25 15:25
+Cannot assign null to property Model\OrderProduct::$id of type int
+Файл: /var/www/html/src/Model/OrderProduct.php
+Строка: 71
+
+Время: 28.10.25 15:27
+Access to undeclared static property Model\Order::$orderObj
+Файл: /var/www/html/src/Model/Order.php
+Строка: 78
+
+Время: 28.10.25 16:39
+Cannot assign null to property Model\OrderProduct::$id of type int
+Файл: /var/www/html/src/Model/OrderProduct.php
+Строка: 71
+
+Время: 28.10.25 16:39
+Cannot assign null to property Model\OrderProduct::$id of type int
+Файл: /var/www/html/src/Model/OrderProduct.php
+Строка: 71
+
+Время: 28.10.25 16:46
+Cannot assign null to property Model\OrderProduct::$id of type int
+Файл: /var/www/html/src/Model/OrderProduct.php
+Строка: 71
+
+Время: 28.10.25 16:49
+Cannot assign null to property Model\OrderProduct::$id of type int
+Файл: /var/www/html/src/Model/OrderProduct.php
+Строка: 71
+
+Время: 28.10.25 17:10
+Cannot assign null to property Model\OrderProduct::$id of type int
+Файл: /var/www/html/src/Model/OrderProduct.php
+Строка: 71
+
+Время: 28.10.25 19:57
+Cannot assign null to property Model\OrderProduct::$id of type int
+Файл: /var/www/html/src/Model/OrderProduct.php
+Строка: 71
+
+Время: 28.10.25 20:05
+Cannot assign null to property Model\OrderProduct::$id of type int
+Файл: /var/www/html/src/Model/OrderProduct.php
+Строка: 71
+
+Время: 28.10.25 20:08
+Cannot assign null to property Model\OrderProduct::$id of type int
+Файл: /var/www/html/src/Model/OrderProduct.php
+Строка: 71
+
+Время: 30.10.25 10:07
+Model\Order::getOrderProducts(): Return value must be of type Model\OrderProduct, array returned
+Файл: /var/www/html/src/Model/Order.php
+Строка: 190
+
+Время: 30.10.25 10:08
+Model\Order::getOrderProducts(): Return value must be of type Model\OrderProduct, array returned
+Файл: /var/www/html/src/Model/Order.php
+Строка: 190
+
+Время: 30.10.25 10:16
+Model\Order::getOrderProducts(): Return value must be of type Model\OrderProduct, array returned
+Файл: /var/www/html/src/Model/Order.php
+Строка: 193
+
+Время: 30.10.25 10:21
+Model\Order::getOrderProducts(): Return value must be of type Model\OrderProduct, array returned
+Файл: /var/www/html/src/Model/Order.php
+Строка: 191
+
+Время: 30.10.25 10:24
+Model\OrderProduct::setProduct(): Argument #1 ($product) must be of type array, Model\Product given, called in /var/www/html/src/Model/OrderProduct.php on line 87
+Файл: /var/www/html/src/Model/OrderProduct.php
+Строка: 124
+
+Время: 30.10.25 10:25
+Call to a member function getAmount() on array
+Файл: /var/www/html/src/Service/OrderService.php
+Строка: 113
+
+Время: 30.10.25 10:28
+Model\Order::setOrderProducts(): Argument #1 ($orderProducts) must be of type Model\OrderProduct, array given, called in /var/www/html/src/Model/Order.php on line 136
+Файл: /var/www/html/src/Model/Order.php
+Строка: 184
+
+Время: 30.10.25 10:29
+Cannot assign array to property Model\Order::$orderProducts of type Model\OrderProduct
+Файл: /var/www/html/src/Model/Order.php
+Строка: 186
+
+Время: 30.10.25 10:42
+Model\Order::getOrderProducts(): Return value must be of type Model\OrderProduct, array returned
+Файл: /var/www/html/src/Model/Order.php
+Строка: 191
+
+Время: 30.10.25 10:43
+Call to a member function getAmount() on array
+Файл: /var/www/html/src/Service/OrderService.php
+Строка: 113
+
+Время: 30.10.25 10:55
+Call to a member function getProduct() on array
+Файл: /var/www/html/src/Views/orders.php
+Строка: 57
+
+Время: 30.10.25 11:00
+Call to a member function getProduct() on array
+Файл: /var/www/html/src/Views/orders.php
+Строка: 57
+
+Время: 30.10.25 11:09
+Call to undefined method Model\OrderProduct::getOrderProducts()
+Файл: /var/www/html/src/Views/orders.php
+Строка: 56
+
+Время: 30.10.25 11:11
+Call to undefined method Model\Order::getProduct()
+Файл: /var/www/html/src/Views/orders.php
+Строка: 53
+
+Время: 30.10.25 11:11
+Call to a member function getProduct() on array
+Файл: /var/www/html/src/Views/orders.php
+Строка: 53
+
+Время: 30.10.25 11:13
+Call to a member function getAmount() on array
+Файл: /var/www/html/src/Views/orders.php
+Строка: 59
+
+Время: 30.10.25 11:14
+Call to undefined method Model\Order::getAmount()
+Файл: /var/www/html/src/Views/orders.php
+Строка: 59
+
+Время: 30.10.25 13:22
+Call to a member function setSum() on array
+Файл: /var/www/html/src/Service/OrderService.php
+Строка: 94
+
+Время: 30.10.25 13:23
+Call to undefined method Model\OrderProduct::getOrderProducts()
+Файл: /var/www/html/src/Service/OrderService.php
+Строка: 90
+
+Время: 30.10.25 13:24
+Call to undefined method Model\OrderProduct::getOrderProducts()
+Файл: /var/www/html/src/Service/OrderService.php
+Строка: 90
+
+Время: 30.10.25 13:25
+Call to undefined method Model\OrderProduct::getOrderProducts()
+Файл: /var/www/html/src/Service/OrderService.php
+Строка: 90
+
+Время: 30.10.25 13:26
+Call to a member function setSum() on array
+Файл: /var/www/html/src/Service/OrderService.php
+Строка: 94
+
+Время: 30.10.25 13:26
+Call to a member function setItemSum() on array
+Файл: /var/www/html/src/Service/OrderService.php
+Строка: 90
+
+Время: 30.10.25 13:42
+Call to a member function setItemSum() on array
+Файл: /var/www/html/src/Service/OrderService.php
+Строка: 91
+
+Время: 30.10.25 13:47
+Call to a member function setSum() on array
+Файл: /var/www/html/src/Service/OrderService.php
+Строка: 94
+
+Время: 30.10.25 13:48
+Call to a member function setSum() on array
+Файл: /var/www/html/src/Service/OrderService.php
+Строка: 94
+
+Время: 30.10.25 13:49
+Call to a member function setSum() on array
+Файл: /var/www/html/src/Service/OrderService.php
+Строка: 94
+
+Время: 30.10.25 13:51
+Call to undefined method Model\Order::getItemSum()
+Файл: /var/www/html/src/Views/orders.php
+Строка: 60
+
+Время: 31.10.25 10:16
+Call to undefined method Model\Product::getAmount()
+Файл: /var/www/html/src/Views/catalog_page.php
+Строка: 49
+
+Время: 31.10.25 10:17
+Call to undefined method Model\Product::getAmount()
+Файл: /var/www/html/src/Views/catalog_page.php
+Строка: 49
+
+Время: 31.10.25 10:18
+Call to undefined method Model\Product::getAmount()
+Файл: /var/www/html/src/Views/catalog_page.php
+Строка: 49
+
+Время: 31.10.25 10:19
+Call to undefined method Model\Product::getAmount()
+Файл: /var/www/html/src/Views/catalog_page.php
+Строка: 49
+
+Время: 31.10.25 10:24
+Call to undefined method Model\Product::getProductId()
+Файл: /var/www/html/src/Views/catalog_page.php
+Строка: 47
+
+Время: 31.10.25 10:33
+Call to a member function getAmount() on array
+Файл: /var/www/html/src/Views/catalog_page.php
+Строка: 49
+
+Время: 31.10.25 10:40
+Call to a member function getAmount() on null
+Файл: /var/www/html/src/Views/catalog_page.php
+Строка: 52
+
+Время: 31.10.25 10:59
+syntax error, unexpected variable "$product", expecting ")"
+Файл: /var/www/html/src/Views/catalog_page.php
+Строка: 44
+
+Время: 31.10.25 11:00
+Object of class Model\UserProducts could not be converted to string
+Файл: /var/www/html/src/Views/catalog_page.php
+Строка: 45
+
+Время: 31.10.25 11:01
+Object of class Model\UserProducts could not be converted to string
+Файл: /var/www/html/src/Views/catalog_page.php
+Строка: 45
+
+Время: 31.10.25 11:06
+Call to a member function getAmount() on int
+Файл: /var/www/html/src/Views/catalog_page.php
+Строка: 45
+
+Время: 31.10.25 11:14
+Call to a member function getAmount() on int
+Файл: /var/www/html/src/Views/catalog_page.php
+Строка: 45
+
+Время: 31.10.25 11:14
+Call to a member function getAmount() on int
+Файл: /var/www/html/src/Views/catalog_page.php
+Строка: 45
+
+Время: 31.10.25 11:14
+Call to a member function getAmount() on int
+Файл: /var/www/html/src/Views/catalog_page.php
+Строка: 45
+
+Время: 31.10.25 11:15
+Call to a member function getAmount() on int
+Файл: /var/www/html/src/Views/catalog_page.php
+Строка: 45
+
+Время: 31.10.25 11:15
+Call to a member function getAmount() on int
+Файл: /var/www/html/src/Views/catalog_page.php
+Строка: 45
+
+Время: 31.10.25 11:15
+Call to a member function getAmount() on int
+Файл: /var/www/html/src/Views/catalog_page.php
+Строка: 45
+
+Время: 31.10.25 11:15
+Call to a member function getAmount() on int
+Файл: /var/www/html/src/Views/catalog_page.php
+Строка: 45
+
+Время: 31.10.25 11:15
+Call to a member function getAmount() on int
+Файл: /var/www/html/src/Views/catalog_page.php
+Строка: 45
+
+Время: 31.10.25 11:15
+Call to a member function getAmount() on int
+Файл: /var/www/html/src/Views/catalog_page.php
+Строка: 45
+
+Время: 31.10.25 11:16
+Call to a member function getAmount() on int
+Файл: /var/www/html/src/Views/catalog_page.php
+Строка: 45
+
+Время: 31.10.25 11:19
+Call to a member function getAmount() on int
+Файл: /var/www/html/src/Views/catalog_page.php
+Строка: 53
+
+Время: 31.10.25 11:20
+Call to a member function getAmount() on int
+Файл: /var/www/html/src/Views/catalog_page.php
+Строка: 40
+
+Время: 31.10.25 11:20
+Call to a member function getAmount() on int
+Файл: /var/www/html/src/Views/catalog_page.php
+Строка: 28
+
+Время: 31.10.25 11:22
+Object of class Model\UserProducts could not be converted to string
+Файл: /var/www/html/src/Views/catalog_page.php
+Строка: 47
+
+Время: 31.10.25 11:47
+Cannot use object of type Model\UserProducts as array
+Файл: /var/www/html/src/Views/catalog_page.php
+Строка: 48
+
+Время: 31.10.25 11:48
+Cannot use object of type Model\UserProducts as array
+Файл: /var/www/html/src/Views/catalog_page.php
+Строка: 49
+
+Время: 31.10.25 11:49
+Cannot use object of type Model\UserProducts as array
+Файл: /var/www/html/src/Views/catalog_page.php
+Строка: 49
+
+Время: 31.10.25 11:50
+Cannot use object of type Model\UserProducts as array
+Файл: /var/www/html/src/Views/catalog_page.php
+Строка: 49
+
+Время: 31.10.25 11:58
+Call to a member function getProductId() on null
+Файл: /var/www/html/src/Views/catalog_page.php
+Строка: 49
+
+Время: 31.10.25 11:58
+Call to a member function getProductId() on array
+Файл: /var/www/html/src/Views/catalog_page.php
+Строка: 49
+
+Время: 31.10.25 11:59
+Call to a member function getProductId() on array
+Файл: /var/www/html/src/Views/catalog_page.php
+Строка: 49
+
+Время: 31.10.25 12:37
+Request\AddCartRequest::getProductId(): Return value must be of type int, null returned
+Файл: /var/www/html/src/Request/AddCartRequest.php
+Строка: 14
+
+Время: 31.10.25 12:38
+Request\DecreaseCartRequest::getProductId(): Return value must be of type int, null returned
+Файл: /var/www/html/src/Request/DecreaseCartRequest.php
+Строка: 14
+
+Время: 31.10.25 12:40
+Request\DecreaseCartRequest::getProductId(): Return value must be of type int, null returned
+Файл: /var/www/html/src/Request/DecreaseCartRequest.php
+Строка: 14
+
+Время: 31.10.25 12:40
+Request\DecreaseCartRequest::getProductId(): Return value must be of type int, null returned
+Файл: /var/www/html/src/Request/DecreaseCartRequest.php
+Строка: 14
+
+Время: 31.10.25 12:45
+Request\DecreaseCartRequest::getAmount(): Return value must be of type int, null returned
+Файл: /var/www/html/src/Request/DecreaseCartRequest.php
+Строка: 18
+
+Время: 31.10.25 13:12
+Request\AddCartRequest::getProductId(): Return value must be of type int, null returned
+Файл: /var/www/html/src/Request/AddCartRequest.php
+Строка: 14

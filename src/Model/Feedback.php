@@ -7,13 +7,12 @@ class Feedback extends Model
     private int $id;
     private int $userId;
     private int $productId;
-
     private int $score;
     private string $comment;
     private string $date;
 
 
-    protected function getTableName(): string
+    protected static function getTableName(): string
     {
         return 'feedback';
     }
@@ -21,10 +20,11 @@ class Feedback extends Model
 
 
 
-    public function getAllFeedbackByProductId(int $productId): array
+    public static function getAllFeedbackByProductId(int $productId): array
     {
+        $tableName = static::getTableName();
 
-        $stmt = $this->PDO->query("SELECT * FROM {$this->getTableName()} WHERE product_id =" . $productId);
+        $stmt = static::getPDO()->query("SELECT * FROM $tableName WHERE product_id =" . $productId);
 
         $feedbacks = $stmt->fetchAll();
 
@@ -56,11 +56,11 @@ class Feedback extends Model
         return $array;
     }
 
-    public function addFeedback(int $userId, int $productId, string $comment, int $score)
+    public static function addFeedback(int $userId, int $productId, string $comment, int $score)
 
     {
-
-        $stmt = $this->PDO->prepare("INSERT INTO {$this->getTableName()} (user_id, product_id, score, comment)
+        $tableName = static::getTableName();
+        $stmt = static::getPDO()->prepare("INSERT INTO $tableName (user_id, product_id, score, comment)
 
         VALUES (:userId, :productId, :score, :comment)");
 
@@ -76,6 +76,27 @@ class Feedback extends Model
     {
         return $this->comment;
     }
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function getUserId(): int
+    {
+        return $this->userId;
+    }
+
+    public function getProductId(): int
+    {
+        return $this->productId;
+    }
+
+    public function getDate(): string
+    {
+        return $this->date;
+    }
+
 
 
 

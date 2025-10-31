@@ -12,12 +12,9 @@ use Request\EditProfileRequest;
 class UserController extends BaseController
 {
 
-    private User $userModel;
-
     public function __construct()
     {
         parent:: __construct();
-        $this->userModel = new User();
     }
 
     public function getRegistrate()
@@ -42,12 +39,7 @@ class UserController extends BaseController
 
             $password = password_hash($password, PASSWORD_DEFAULT);
 
-            $this->userModel->addUser($name, $email, $password);
-
-            //if(!$this->authService->check()){
-            //$_SESSION['userId'] = $this->userModel->getId();
-            //header('Location: /catalog');}
-
+            User::addUser($name, $email, $password);
 
             header('Location: /login');
         }
@@ -134,11 +126,11 @@ class UserController extends BaseController
 
                 if ($name !== $user->getName()) {
 
-                    $this->userModel->updateName($name);
+                    User::updateName($name);
                 }
 
                 if (!empty($email) && $email !== $user->getEmail()) {
-                    $this->userModel->updateEmail($email);
+                    User::updateEmail($email);
 
                 }
 

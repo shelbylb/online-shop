@@ -28,7 +28,7 @@
 <body>
 <h1>Мои заказы</h1>
 
-<?php foreach ($userOrders as $userOrder): ?>
+<?php foreach ($userOrders as $userOrder):?>
     <h2>Заказ №<?php echo $userOrder->getId() ?></h2>
     <p>Контактное имя:<?php echo $userOrder->getContactName()?></p>
     <p>Контактный номер телефона:<?php echo $userOrder->getContactPhone()?></p>
@@ -47,16 +47,20 @@
         </tr>
         </thead>
         <tbody>
-        <?php foreach ($userOrder->getOrderProducts() as $orderProduct): ?>
+
+
+
+        <?php foreach ($userOrder->getOrderProducts() as $orderProduct):?>
             <tr>
-                <?php $product = $this->productModel->getOneById($orderProduct->getProductId()); ?>
-                <td><?php echo $product->getName() ?></td>
-                <td><img class="card-img-top" src="<?php echo $product->getImageUrl();?>" alt="Card image" height="160" width="160"></td>
-                <td><?php echo $product->getPrice() ?></td>
+
+                <td><?php echo $orderProduct->getProduct()->getName() ?></td>
+                <td><img class="card-img-top" src="<?php echo $orderProduct->getProduct()->getImageUrl();?>" alt="Card image" height="160" width="160"></td>
+                <td><?php echo $orderProduct->getProduct()->getPrice() ?></td>
                 <td><?php echo $orderProduct->getAmount() ?></td>
-                <td><?php echo $orderProduct->getSum() ?></td>
+                <td><?php echo $orderProduct->getItemSum() ?></td>
             </tr>
         <?php endforeach; ?>
+
 
         </tbody>
         <tfoot>

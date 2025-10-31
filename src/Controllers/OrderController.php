@@ -11,17 +11,14 @@ use Service\OrderService;
 
 class OrderController extends BaseController
 {
-
     private CartService $cartService;
     protected OrderService $orderService;
-    private $productModel;
 
 
     public function __construct(){
         parent:: __construct();
         $this->cartService = new CartService();
         $this->orderService = new OrderService();
-        $this->productModel = new Product();
 
 
     }
@@ -52,7 +49,8 @@ class OrderController extends BaseController
 
 
         $userOrders = $this->orderService->getAll();
-        echo  '<pre>';
+
+
         require_once '../Views/orders.php';
 
     }
@@ -87,5 +85,7 @@ class OrderController extends BaseController
 
         header('Location: /catalog');
     }
+
+
 
 }

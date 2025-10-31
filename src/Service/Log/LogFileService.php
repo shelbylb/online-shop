@@ -6,7 +6,7 @@ class LogFileService implements LogInterface
 {
         public function log($exception, $data = null)
     {
-            $filename = '../Storage/LogDBService/errors.txt';
+            $filename = '../Storage/Log/errors.txt';
             date_default_timezone_set('Etc/GMT-8');
             $datetime = date('d.m.y H:i');
 

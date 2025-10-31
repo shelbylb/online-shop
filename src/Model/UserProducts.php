@@ -12,14 +12,15 @@ class UserProducts extends Model
     private int $userId;
 
 
-    protected function getTableName(): string{
+    protected static function getTableName(): string{
         return 'user_products';
     }
 
 
-    public function getAllUserProductsByUserId(int $userId): array
+    public static function getAllUserProductsByUserId(int $userId): array
     {
-        $stmt = $this->PDO->query("SELECT * FROM {$this->getTableName()} WHERE user_id = " . $userId);
+        $tableName = static::getTableName();
+        $stmt = static::getPDO()->query("SELECT * FROM $tableName WHERE user_id = " . $userId);
         $userProducts = $stmt->fetchAll();
 
         if ($userProducts === []){
@@ -29,13 +30,13 @@ class UserProducts extends Model
         $array = [];
 
         foreach ($userProducts as $userProduct){
-            $productObg = new self();
-            $productObg->id = $userProduct['id'];
-            $productObg->userId = $userProduct['user_id'];
-            $productObg->productId = $userProduct['product_id'];
-            $productObg->amount = $userProduct['amount'];
+            $productObj = new self();
+            $productObj->id = $userProduct['id'];
+            $productObj->userId = $userProduct['user_id'];
+            $productObj->productId = $userProduct['product_id'];
+            $productObj->amount = $userProduct['amount'];
 
-            $array[] = $productObg;
+            $array[] = $productObj;
 
         }
 
@@ -43,11 +44,63 @@ class UserProducts extends Model
 
     }
 
+    public static function getAllByUserIdWithProducts(int $userId): array
+    {
+        $tableName = static::getTableName();
+        $stmt = static::getPDO()->query
+        ("SELECT up.id as up_id, up.*, p.id as p_id, p.* FROM $tableName up INNER JOIN products p ON up.product_id = p.id WHERE up.user_id = $userId");
+        $userProducts = $stmt->fetchAll(); // up.id as up_id, up.*, p.id as p_id, p.* алиасы для столбцов меняют названия для столбцов с одинаковым названием
 
-    public function checkProduct(int $userId, int $productId): self | null
+
+        $array = [];
+
+        foreach ($userProducts as $userProduct){
+
+            $obj = new self();
+            $array[] = $obj->createObj($userProduct);
+
+        }
+
+        return $array;
+
+    }
+
+    public static function createObj(array $userProduct): self|array
     {
 
-        $stmt = $this->PDO->prepare("SELECT * FROM {$this->getTableName()} WHERE (product_id = :productId AND user_id = :userId)");
+        if ($userProduct === [])
+        {
+            return [];
+        }
+
+        $productObj = new self();
+        $productObj->id = $userProduct['up_id'];
+        $productObj->userId = $userProduct['user_id'];
+        $productObj->productId = $userProduct['product_id'];
+        $productObj->amount = $userProduct['amount'];
+
+        $productData = [
+            'id' => $userProduct['p_id'],
+            'name' => $userProduct['name'],
+            'description' => $userProduct['description'],
+            'price' => $userProduct['price'],
+            'image_url' => $userProduct['image_url']
+
+        ];
+
+
+        $product = Product::createObj($productData);
+        $productObj->setProduct($product);
+
+        return $productObj;
+
+    }
+
+
+    public static function checkProduct(int $userId, int $productId): self | null
+    {
+        $tableName = static::getTableName();
+        $stmt = static::getPDO()->prepare("SELECT * FROM $tableName WHERE (product_id = :productId AND user_id = :userId)");
         $stmt->execute(['productId' => $productId, 'userId' => $userId]);
         $data = $stmt->fetch();
 
@@ -65,28 +118,34 @@ class UserProducts extends Model
         return $productObg;
     }
 
-    public function add(int $userId, int $productId, int $amount)
+    public static function add(int $userId, int $productId, int $amount)
     {
-        $stmt = $this->PDO->prepare("INSERT INTO {$this->getTableName()} (user_id, product_id, amount) 
+        $tableName = static::getTableName();
+        $stmt = static::getPDO()->prepare("INSERT INTO $tableName (user_id, product_id, amount) 
         VALUES (:userId, :productId, :amount)");
 
         $stmt->execute(['userId' => $userId, 'productId' => $productId, 'amount' => $amount]);
     }
 
-    public function update(int $userId, int $productId, int $amount)
+    public static function update(int $userId, int $productId, int $amount)
     {
-        $stmt = $this->PDO->prepare("UPDATE {$this->getTableName()} SET amount = :amount WHERE user_id = :userId AND product_id = :productId");
+        $tableName = static::getTableName();
+        $stmt = static::getPDO()->prepare("UPDATE $tableName SET amount = :amount WHERE user_id = :userId AND product_id = :productId");
         $stmt->execute(['amount' => $amount, 'userId' => $userId, 'productId' => $productId]);
 
     }
 
-    public function deleteByUserId(int $userId){
-        $stmt = $this->PDO->prepare("DELETE FROM {$this->getTableName()} WHERE user_id = :userId");
+    public static function deleteByUserId(int $userId)
+    {
+        $tableName = static::getTableName();
+        $stmt = static::getPDO()->prepare("DELETE FROM $tableName WHERE user_id = :userId");
         $stmt->execute(['userId' => $userId]);
     }
 
-    public function deleteProduct(int $userId, int $productId){
-        $stmt = $this->PDO->prepare("DELETE FROM {$this->getTableName()} WHERE user_id = :userId AND product_id = :productId");
+    public static function deleteProduct(int $userId, int $productId)
+    {
+        $tableName = static::getTableName();
+        $stmt = static::getPDO()->prepare("DELETE FROM $tableName WHERE user_id = :userId AND product_id = :productId");
         $stmt->execute(['userId' => $userId, 'productId' => $productId]);
     }
 

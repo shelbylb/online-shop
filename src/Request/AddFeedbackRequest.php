@@ -7,14 +7,10 @@ use Service\Auth\AuthSessionService;
 
 class AddFeedbackRequest
 {
-    private Order $orderModel;
     private AuthSessionService $authService;
-    private OrderProduct $orderProductModel;
     public function __construct(private array $data)
     {
-        $this->orderModel = new Order();
         $this->authService = new AuthSessionService();
-        $this->orderProductModel = new OrderProduct();
 
     }
 
@@ -45,7 +41,7 @@ class AddFeedbackRequest
         }
 
         $user = $this->authService->getCurrentUser();
-        $orders = $this->orderModel->getAllByUserId($user->getId());
+        $orders = Order::getAllByUserId($user->getId());
 
         $productId = $this->data['productId'];
 
@@ -53,7 +49,7 @@ class AddFeedbackRequest
         foreach ($orders as $order) {
 
             $orderId = $order->getId();
-            $productsByOrderId = $this->orderProductModel->getAllByOrderId($orderId);
+            $productsByOrderId = OrderProduct::getAllByOrderId($orderId);
 
             foreach ($productsByOrderId as $productOrder) {
                 $productIdByOrder = $productOrder->getProductId();

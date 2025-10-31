@@ -50,7 +50,7 @@ class RegisrateRequest
                 $error['email'] = 'Email некорректный';
             } else {
 
-                $user = $this->userModel->getByEmail($email);
+                $user = User::getByEmail($email);
 
                 if ($user !== null) {
                     $error['email'] = 'Email уже зарегистрирован';

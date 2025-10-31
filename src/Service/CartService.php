@@ -3,50 +3,45 @@
 namespace Service;
 
 use DTO\UserProductsDTO;
-use Model\Product;
 use Model\UserProducts;
 use Service\Auth\AuthInterface;
 use Service\Auth\AuthSessionService;
 
 class CartService
 {
-    private UserProducts $userProducts;
     private AuthInterface $authService;
-    private Product $productsModel;
 
     public function __construct()
     {
-        $this->userProducts = new UserProducts();
         $this->authService = new AuthSessionService();
-        $this->productsModel = new Product();
-
     }
 
     public function addProduct(UserProductsDTO $data)
     {
         $userId = $this->authService->getCurrentUser();
-        $product = $this->userProducts->checkProduct($userId->getId(), $data->getProductId());
+        $product = UserProducts::checkProduct($userId->getId(), $data->getProductId());
 
         if($product){
             $amount = $product->getAmount() + $data->getAmount();
-            $this->userProducts->update($userId->getId(), $data->getProductId(), $amount);
+            UserProducts::update($userId->getId(), $data->getProductId(), $amount);
 
         } else{
-            $this->userProducts->add($userId->getId(), $data->getProductId(), $data->getAmount());
+            UserProducts::add($userId->getId(), $data->getProductId(), $data->getAmount());
 
         }
 
+        echo json_encode($amount);
 
     }
 
     public function decreaseProduct(UserProductsDTO $data)
     {
         $userId = $this->authService->getCurrentUser();
-        $product = $this->userProducts->checkProduct($userId->getId(), $data->getProductId());
+        $product = UserProducts::checkProduct($userId->getId(), $data->getProductId());
 
         if($product) {
             $amount = $product->getAmount() - $data->getAmount();
-            $this->userProducts->update($userId->getId(), $data->getProductId(), $amount);
+            UserProducts::update($userId->getId(), $data->getProductId(), $amount);
             $this->removeFromCart($userId->getId(), $data->getProductId());
         }
 
@@ -55,13 +50,13 @@ class CartService
 
     public function removeFromCart($userId, $productId)
     {
-        $product = $this->userProducts->checkProduct($userId, $productId);
+        $product = UserProducts::checkProduct($userId, $productId);
 
         if($product){
             $amount = $product->getAmount();
 
             if ($amount === 0){
-                $this->userProducts->deleteProduct($userId, $productId);
+                UserProducts::deleteProduct($userId, $productId);
 
             }
         }
@@ -76,12 +71,9 @@ class CartService
             return [];
         }
 
-        $userProducts = $this->userProducts->getAllUserProductsByUserId($user->getId());
+        $userProducts = UserProducts::getAllByUserIdWithProducts($user->getId());
 
         foreach ($userProducts as $userProduct) {
-            $product = $this->productsModel->getOneById($userProduct->getProductId());
-
-            $userProduct->setProduct($product);
             $totalSum = $userProduct->getAmount() * $userProduct->getProduct()->getPrice();
             $userProduct->setTotalSum($totalSum);
 

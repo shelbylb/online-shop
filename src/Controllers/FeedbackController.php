@@ -12,22 +12,9 @@ use Request\GetFeedbackRequest;
 
 class FeedbackController extends BaseController
 {
-    private Order $orderModel;
-    private UserProducts $userProduct;
-    private OrderProduct $orderProductModel;
-    private Product $productModel;
-    private Feedback $feedback;
-
-
     public function __construct()
     {
         parent:: __construct();
-        $this->orderModel = new Order();
-        $this->userProduct = new UserProducts();
-        $this->orderProductModel = new OrderProduct();
-        $this->productModel = new Product();
-        $this->feedback = new Feedback();
-
 
     }
 
@@ -43,7 +30,7 @@ class FeedbackController extends BaseController
 
             $user = $this->authService->getCurrentUser();
 
-            $this->feedback->addFeedback(
+            Feedback::addFeedback(
 
                 $user->getId(),
                 $request->getProductId(),
@@ -63,8 +50,8 @@ class FeedbackController extends BaseController
 
     public function getFeedback(GetFeedbackRequest $request){
         $productId = $request->getProductId();
-        $feedbacks = $this->feedback->getAllFeedbackByProductId($productId);
-        $product = $this -> productModel -> getOneById($productId);
+        $feedbacks = Feedback::getAllFeedbackByProductId($productId);
+        $product = Product::getOneById($productId);
         require_once '../Views/feedback.php';
     }
 

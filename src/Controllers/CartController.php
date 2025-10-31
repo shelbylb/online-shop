@@ -31,6 +31,12 @@ class CartController extends BaseController
                 );
 
                 $this->cartService->addProduct($dto);
+
+                $amount = ['amount'=> 10];
+
+                //echo json_encode($amount);
+
+
             }
 
             header("Location: /catalog");

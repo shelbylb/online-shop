@@ -9,21 +9,23 @@ class User extends Model
     private string $email;
     private string $password;
 
-    protected function getTableName(): string{
+    protected static function getTableName(): string{
         return 'users';
     }
 
-    public function addUser(string $name, string $email, string $password)
+    public static function addUser(string $name, string $email, string $password)
     {
-        $stmt = $this->PDO->prepare("INSERT INTO {$this->getTableName()} (name, email, password) VALUES (:name, :email, :password)");
+        $tableName = static::getTableName();
+        $stmt = static::getPDO()->prepare("INSERT INTO $tableName (name, email, password) VALUES (:name, :email, :password)");
         $stmt->execute(['name' => $name, 'email' => $email, 'password' => $password]);
 
 
     }
 
-    public function getByEmail(string $email): self|null
+    public static function getByEmail(string $email): self|null
     {
-        $stmt = $this->PDO->prepare("SELECT * FROM {$this->getTableName()} WHERE email= :email");
+        $tableName = static::getTableName();
+        $stmt = static::getPDO()->prepare("SELECT * FROM $tableName WHERE email= :email");
         $stmt->execute(['email' => $email]);
 
         $user = $stmt->fetch();
@@ -40,9 +42,10 @@ class User extends Model
         return $obj;
     }
 
-    public function getById(string  $userId): self|null
+    public static function getById(string  $userId): self|null
     {
-        $stmt = $this->PDO->query("SELECT * FROM {$this->getTableName()} WHERE id = " . $userId);
+        $tableName = static::getTableName();
+        $stmt = static::getPDO()->query("SELECT * FROM $tableName WHERE id = " . $userId);
 
         $user = $stmt->fetch();
         if ($user === false) {
@@ -58,16 +61,18 @@ class User extends Model
         return $obj;
     }
 
-    public function updateName( string $name)
+    public static function updateName( string $name)
     {
-        $smt = $this->PDO->prepare("UPDATE {$this->getTableName()} SET name = :name WHERE id = " . $_SESSION['userId']);
+        $tableName = static::getTableName();
+        $smt = static::getPDO()->prepare("UPDATE $tableName SET name = :name WHERE id = " . $_SESSION['userId']);
         $smt->execute(['name' => $name]);
 
     }
 
-    public function updateEmail(string $email)
+    public static function updateEmail(string $email)
     {
-        $smt = $this->PDO->prepare("UPDATE {$this->getTableName()} SET email = :email WHERE id = " . $_SESSION['userId']);
+        $tableName = static::getTableName();
+        $smt = static::getPDO()->prepare("UPDATE $tableName SET email = :email WHERE id = " . $_SESSION['userId']);
         $smt->execute(['email' => $email]);
     }
 
