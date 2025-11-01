@@ -24,7 +24,7 @@
                         </form>
                         <a href="#"><h5 class="card-title"><?php echo $product->getDescription(); ?></h5></a>
                         <div class="card-footer">
-                            <?php echo $product->getPrice(); ?>
+                            <?php echo $product->getPrice().' руб.'; ?>
 
                         </div>
                     </div>
