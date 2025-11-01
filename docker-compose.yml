@@ -18,7 +18,7 @@ services:
     image: postgres:13.1
     container_name: postgres_db
     volumes:
-      - ./Docker/postgres/data:/var/lib/postgresql/data
+      - ./Docker/postgres/data_new:/var/lib/postgresql/data
     environment:
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_USER}
