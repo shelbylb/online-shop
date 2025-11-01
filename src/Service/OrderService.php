@@ -39,8 +39,8 @@ class OrderService
 
             $sum = $this->cartService->getSum();
 
-            if ($sum < 1000) {
-                throw new \Exception('Для оформления заказа сумма заказа должна быть больше 1000 рублей');
+            if ($sum < 10) {
+                throw new \Exception('Для оформления заказа сумма заказа должна быть больше 10 рублей');
             }
 
             $orderId = Order::create(
