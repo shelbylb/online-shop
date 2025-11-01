@@ -618,3 +618,61 @@ Request\DecreaseCartRequest::getAmount(): Return value must be of type int, null
 Request\AddCartRequest::getProductId(): Return value must be of type int, null returned
 Файл: /var/www/html/src/Request/AddCartRequest.php
 Строка: 14
+
+Время: 01.11.25 10:16
+SQLSTATE[08006] [7] connection to server at "postgres_db" (172.18.0.2), port 5437 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+Файл: /var/www/html/src/Model/Model.php
+Строка: 11
+
+Время: 01.11.25 10:17
+SQLSTATE[08006] [7] connection to server at "postgres_db" (172.18.0.2), port 5434 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+Файл: /var/www/html/src/Model/Model.php
+Строка: 11
+
+Время: 01.11.25 10:18
+SQLSTATE[08006] [7] connection to server at "postgres_db" (172.18.0.2), port 5437 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+Файл: /var/www/html/src/Model/Model.php
+Строка: 11
+
+Время: 01.11.25 10:18
+SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation "products" does not exist
+LINE 1: SELECT * FROM products
+                      ^
+Файл: /var/www/html/src/Model/Product.php
+Строка: 22
+
+Время: 01.11.25 10:37
+Для оформления заказа сумма заказа должна быть больше 1000 рублей
+Файл: /var/www/html/src/Service/OrderService.php
+Строка: 43
+
+Время: 01.11.25 11:00
+SQLSTATE[08006] [7] connection to server at "postgres_db" (172.18.0.3), port 5432 failed: FATAL:  the database system is starting up
+Файл: /var/www/html/src/Model/Model.php
+Строка: 11
+
+Время: 01.11.25 11:02
+SQLSTATE[08006] [7] connection to server at "postgres_db" (172.18.0.3), port 5437 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+Файл: /var/www/html/src/Model/Model.php
+Строка: 11
+
+Время: 01.11.25 11:02
+SQLSTATE[08006] [7] connection to server at "postgres_db" (172.18.0.3), port 5434 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+Файл: /var/www/html/src/Model/Model.php
+Строка: 11
+
+Время: 01.11.25 11:03
+SQLSTATE[08006] [7] connection to server at "postgres_db" (172.18.0.3), port 5437 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+Файл: /var/www/html/src/Model/Model.php
+Строка: 11
+
+Время: 01.11.25 11:07
+SQLSTATE[08006] [7] missing "=" after "/*внутренний" in connection info string
+Файл: /var/www/html/src/Model/Model.php
+Строка: 11
