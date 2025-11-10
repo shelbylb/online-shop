@@ -1,3 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Здесь размещается «шапка» страницы: мета-информация, стили, скрипты -->
+    <meta charset="UTF-8">
+    <title>Название страницы</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Другие скрипты и мета-теги -->
+</head>
+<body>
 <div class="container">
     <a href="/profile">Мой профиль</a>
     <a href="/cart">Корзина</a>
@@ -31,8 +42,8 @@
                 </a>
 
 
-            </form>
-            <div class="amount">
+
+                <div
 
                 <?php
                 // Ищем количество для текущего товара по его ID
@@ -42,7 +53,7 @@
                 foreach ($userProductsAmount as $userProductAmount) {
                     if ($userProductAmount->getProductId() == $productId) {
                         $amount = $userProductAmount->getAmount();
-                        break; // Нашли — выходим из цикла
+                        break;
                     }
                 }
 
@@ -51,14 +62,15 @@
             </div>
 
 
-                <div class="quantity-container">
-                    <?php if ($amount > 0): ?>
-                        <!-- Если количество больше 0 — показываем кнопки + и - и поле ввода -->
-                        <form action="/decrease-cart" method="POST" style="display: inline-flex;">
-                            <input type="hidden" name="productId" value="<?php echo $product->getId()?>" id="productId" required>
-                            <input type="hidden" placeholder="1" name="amount" id="amount" value="1" min="1">
-                            <button type="submit" class="registerbtn btn-minus">-</button>
-                        </form>
+            <div class="quantity-container">
+                <?php if ($amount > 0): ?>
+                    <!-- Если количество больше 0 — показываем кнопки + и - и поле ввода -->
+                    <form action="/decrease-cart" method="POST" style="display: inline-flex;">
+                        <input type="hidden" name="productId" value="<?php echo $product->getId()?>" id="productId" required>
+                        <input type="hidden" placeholder="1" name="amount" id="amount" value="1" min="1">
+                        <button type="submit" class="registerbtn btn-minus">-</button>
+                    </form>
+
 
                         <input
                                 type="number"
@@ -70,27 +82,61 @@
                                 style="width: 40px; text-align: center;"
                         >
 
-                        <form action="/add-cart" method="POST" style="display: inline-flex;">
-                            <input type="hidden" name="productId" value="<?php echo $product->getId()?>" id="productId" required>
-                            <input type="hidden" placeholder="1" name="amount" id="amount" value="1" min="1">
-                            <button type="submit" class="registerbtn btn-plus">+</button>
-                        </form>
-                    <?php else: ?>
-                        <!-- Если количество равно 0 — показываем кнопку "Добавить в корзину" -->
-                        <form action="/add-cart" method="POST">
-                            <input type="hidden" name="productId" value="<?php echo $product->getId()?>" id="productId" required>
-                            <input type="hidden" placeholder="1" name="amount" id="amount" value="1" min="1">
-                            <button type="submit" class="regis terbtn btn-add">Добавить в корзину</button>
-                        </form>
-                    <?php endif; ?>
-                </div>
+
+                    <form class="increase-form-plus" onsubmit="return false" method="POST" style="display: inline-flex;">
+                        <input type="hidden" name="productId" value="<?php echo $product->getId()?>" id="productId" required>
+                        <input type="hidden" placeholder="1" name="amount" id="amount" value="1" min="1">
+                        <button type="submit" >+</button>
+                    </form>
+                <?php else: ?>
+                    <!-- Если количество равно 0 — показываем кнопку "Добавить в корзину" -->
+                    <form action="/add-cart" method="POST">
+                        <input type="hidden" name="productId" value="<?php echo $product->getId()?>" id="productId" required>
+                        <input type="hidden" placeholder="1" name="amount" id="amount" value="1" min="1">
+                        <button type="submit" class="regis terbtn btn-add">Добавить в корзину</button>
+                    </form>
+                <?php endif; ?>
+            </div>
 
         <?php endforeach; ?>
     </div>
-
-
-
 </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script>
+
+    $(document).ready(function() {
+        var form = $('.increase-form-plus');
+        form.submit(function() {
+            console.log('hello');
+            var form = $(this);
+
+            $.ajax({
+                type: "POST",
+                url: "/add-cart",
+                data: $(this).serialize(),
+                success: function(){
+                    // Находим конкретное поле ввода для этого товара
+                    var quantityInput = form.closest('.quantity-container').find('.quantity-input');
+                    var currentValue = parseInt(quantityInput.val()) || 0;
+                    quantityInput.val(currentValue + 1);
+
+                    // Также обновляем placeholder
+                    quantityInput.attr('placeholder', currentValue + 1);
+                }
+            })
+        });
+    });
+
+
+
+
+
+</script>
+
+
+
+</html>
 
 
 <style>

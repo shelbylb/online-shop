@@ -32,12 +32,10 @@ class CartController extends BaseController
 
                 $this->cartService->addProduct($dto);
 
-                
-
-
             }
 
             header("Location: /catalog");
+
         } else {
             header("Location: /login");
             exit();

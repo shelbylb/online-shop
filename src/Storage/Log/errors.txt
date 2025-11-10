@@ -676,3 +676,14 @@ SQLSTATE[08006] [7] connection to server at "postgres_db" (172.18.0.3), port 543
 SQLSTATE[08006] [7] missing "=" after "/*внутренний" in connection info string
 Файл: /var/www/html/src/Model/Model.php
 Строка: 11
+
+Время: 04.11.25 20:25
+SQLSTATE[08006] [7] connection to server at "postgres_db" (172.18.0.4), port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+Файл: /var/www/html/src/Model/Model.php
+Строка: 11
+
+Время: 04.11.25 20:25
+SQLSTATE[08006] [7] connection to server at "postgres_db" (172.18.0.4), port 5432 failed: FATAL:  the database system is starting up
+Файл: /var/www/html/src/Model/Model.php
+Строка: 11
