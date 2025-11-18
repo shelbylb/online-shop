@@ -687,3 +687,10 @@ SQLSTATE[08006] [7] connection to server at "postgres_db" (172.18.0.4), port 543
 SQLSTATE[08006] [7] connection to server at "postgres_db" (172.18.0.4), port 5432 failed: FATAL:  the database system is starting up
 Файл: /var/www/html/src/Model/Model.php
 Строка: 11
+
+Время: 18.11.25 14:54
+SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation "products" does not exist
+LINE 1: SELECT * FROM products
+                      ^
+Файл: /var/www/html/src/Model/Product.php
+Строка: 22
