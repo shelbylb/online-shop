@@ -12,9 +12,14 @@ class Product extends Model
     private int $price;
     private string $imageUrl;
 
-    public function catalog() : array|null
+    protected static function getTableName(): string{
+        return 'products';
+    }
+
+    public static function catalog() : array|null
     {
-        $stmt = $this->PDO->query('SELECT * FROM products');
+        $tableName = static::getTableName();
+        $stmt = static::getPDO()->query("SELECT * FROM $tableName");
         $products = $stmt->fetchAll();
 
         if ($products === []) {
@@ -23,14 +28,8 @@ class Product extends Model
 
         $array = [];
 
-        foreach ($products as $catalog) {
-            $orderObj = new self();
-            $orderObj->id = $catalog['id'];
-            $orderObj->name = $catalog['name'];
-            $orderObj->description = $catalog['description'];
-            $orderObj->price = $catalog['price'];
-            $orderObj->imageUrl = $catalog['image_url'];
-            $array[] = $orderObj;
+        foreach ($products as $product) {
+            $array[] = static::createObj($product);
 
         }
 
@@ -38,12 +37,22 @@ class Product extends Model
 
     }
 
-    public function getOneById(int $productId) : self|null
+    public static function getOneById(int $productId) : self|null
     {
-        $stmt = $this->PDO->query("SELECT * FROM products WHERE id = $productId");
+        $tableName = static::getTableName();
+        $stmt = static::getPDO()->query("SELECT * FROM $tableName WHERE id = $productId");
         $product = $stmt->fetch();
 
         if ($product === false) {
+            return null;
+        }
+
+        return static::createObj($product);
+    }
+
+    public static function createObj(array $product):self|null
+    {
+        if(!$product){
             return null;
         }
 
@@ -55,6 +64,8 @@ class Product extends Model
         $obj->imageUrl = $product['image_url'];
 
         return $obj;
+
+
     }
 
     public function getId(): int

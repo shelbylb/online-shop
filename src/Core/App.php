@@ -2,108 +2,13 @@
 
 namespace Core;
 
-use Controllers\CartController;
-use Controllers\OrderController;
-use Controllers\ProductController;
-use Controllers\UserController;
+use Service\Log\LogDBService;
+use Service\Log\LogFileService;
 
 class App
 {
-//    private array $routes = [
-//        '/registration' => [
-//            'GET' => [
-//                'class' => UserController::class,
-//                'method' => 'getRegistrate',
-//            ],
-//            'POST' => [
-//                'class' => UserController::class,
-//                'method' => 'registrate',
-//            ]
-//        ],
-//
-//        '/login' => [
-//            'GET' => [
-//                'class' => UserController::class,
-//                'method' => 'getLogin',
-//            ],
-//            'POST' => [
-//                'class' => UserController::class,
-//                'method' => 'login',
-//            ]
-//        ],
-//
-//        '/profile' => [
-//            'GET' => [
-//                'class' => UserController::class,
-//                'method' => 'getProfile',
-//            ]
-//        ],
-//
-//        '/edit-profile' => [
-//            'GET' => [
-//                'class' => UserController::class,
-//                'method' => 'getEditProfile',
-//            ],
-//            'POST' => [
-//                'class' => UserController::class,
-//                'method' => 'editProfile',
-//            ]
-//        ],
-//
-//        '/catalog' => [
-//            'GET' => [
-//                'class' => ProductController::class,
-//                'method' => 'getCatalog',
-//            ]
-//        ],
-//
-//        '/add-cart' => [
-//            'POST' => [
-//                'class' => CartController::class,
-//                'method' => 'addCart',
-//            ]
-//        ],
-//
-//        '/cart' => [
-//            'GET' => [
-//                'class' => CartController::class,
-//                'method' => 'getCart',
-//            ]
-//        ],
-//
-//        '/logout' => [
-//            'GET' => [
-//                'class' => UserController::class,
-//                'method' => 'logout',
-//            ]
-//        ],
-//
-//        '/create-order' => [
-//            'GET' => [
-//                'class' => OrderController::class,
-//                'method' => 'getCheckOut',
-//
-//            ],
-//
-//            'POST' => [
-//                'class' => OrderController::class,
-//                'method' => 'handleCheckOut',
-//            ]
-//        ],
-//
-//        '/orders' => [
-//            'GET' => [
-//                'class' => OrderController::class,
-//                'method' => 'getPageOrders',
-//
-//            ],
-//
-//            'POST' => [
-//                'class' => OrderController::class,
-//                'method' => '',
-//            ]
-//        ]
-//    ];
+    private LogFileService $log;
+
 
     private array $routes = [];
 
@@ -125,33 +30,54 @@ class App
 
 
                 $controller = new $class();
-                $controller->$method();
+                $requestClass =$handler['request'];
+                try
+                {
+                    if($requestClass !== null){
+                        $request = new $requestClass($_POST);
+                        $controller->$method($request);
+                    }else{
+
+                        $controller->$method();
+                    }
+                } catch (\Throwable $exception)
+                {
+
+                    $this->log = new LogFileService();
+
+                    $this->log->log($exception);
+
+                    require_once '../Views/500.php';
+                }
+
 
             } else {
-                echo "$routesMethod не поддерживаетсядля $requestUri";
+                print_r( "$requestMethod не поддерживается для $requestUri");
             }
 
         } else {
             http_response_code(404);
-            require_once '../Views/'; //подключить страницу 404
+            require_once '../Views/404.php'; //подключить страницу 404
         }
 
 
     }
 
-    public function get(string $route, string $className,string $method)
+    public function get(string $route, string $className,string $method, string $requestClass = null)
     {
         $this->routes[$route]['GET'] = [
             'class' => $className,
-            'method' => $method
+            'method' => $method,
+            'request' => $requestClass
         ];
     }
 
-    public function post(string $route, string $className,string $method)
+    public function post(string $route, string $className,string $method, string $requestClass = null)
     {
         $this->routes[$route]['POST'] = [
             'class' => $className,
-            'method' => $method
+            'method' => $method,
+            'request' => $requestClass
         ];
     }
 

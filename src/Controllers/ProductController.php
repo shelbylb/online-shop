@@ -3,13 +3,15 @@
 namespace Controllers;
 
 use Model\Product;
+use Service\CartService;
 
-class ProductController
+class ProductController extends BaseController
 {
-    private Product $productModel;
+    private CartService $cartService;
 
     public function __construct(){
-        $this->productModel = new Product();
+        parent:: __construct();
+        $this->cartService = new CartService();
     }
 
     public function getCatalog()
@@ -18,8 +20,8 @@ class ProductController
             header("Location: /login");
         }
 
-        $products = $this -> productModel -> catalog();
-
+        $products = Product::catalog();
+        $userProductsAmount = $this->cartService->getUserProducts();
 
         require_once '../Views/catalog_page.php';
     }
